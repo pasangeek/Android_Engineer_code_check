@@ -8,7 +8,12 @@ import androidx.fragment.app.DialogFragment
 import jp.co.yumemi.android.code_check.databinding.FragmentErrorDialogBinding
 import jp.co.yumemi.android.code_check.ui.home.HomeViewModel
 
-
+/**
+ * DialogFragment to display an error message to the user.
+ *
+ * @param errorMessage The error message to be displayed.
+ * @param viewModel The ViewModel associated with the fragment.
+ */
 class ErrorDialog(private val errorMessage: String, private val viewModel: HomeViewModel) :
     DialogFragment() {
 
@@ -20,8 +25,7 @@ class ErrorDialog(private val errorMessage: String, private val viewModel: HomeV
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentErrorDialogBinding.inflate(inflater, container, false)
-
-
+        // Set the error message in the view
         val view = binding!!.root
         // Set the error message in the view
         binding!!.errorMessage.text = errorMessage
@@ -33,7 +37,7 @@ class ErrorDialog(private val errorMessage: String, private val viewModel: HomeV
     private fun backToHomePageButton() {
         // Attach the click listener to the "close" button
         binding!!.closeButton.setOnClickListener {
-
+            // Return the root view
             dismiss()
         }
     }

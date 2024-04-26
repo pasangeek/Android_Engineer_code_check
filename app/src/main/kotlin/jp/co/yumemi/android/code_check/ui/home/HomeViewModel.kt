@@ -15,23 +15,39 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for the HomeFragment responsible for managing data related to GitHub repository search.
+ *
+ * @property githubRepository The repository responsible for fetching GitHub repository data.
+ * @property networkConnectivityRepository The repository responsible for monitoring network connectivity.
+ * @property isOnline LiveData indicating the current internet connection status.
+ * @property responseGithubRepositoryList LiveData holding the result state of GitHub repository search.
+ * @property gitHubRepositoryList LiveData holding the list of GitHub repository data.
+ * @property errorState LiveData holding the error state in case of network failures.
+ */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val githubRepository: GithubRepository,
     connectivityRepository: ConnectivityRepository
-) :ViewModel() {
+) : ViewModel() {
 
     val isOnline = connectivityRepository.isConnected.asLiveData()
     val responseGithubRepositoryList = MutableLiveData<ResultState>()
-    val gitHubRepositoryList= MutableLiveData<List<GithubRepositoryData>> ()
+    val gitHubRepositoryList = MutableLiveData<List<GithubRepositoryData>>()
 
     var errorState = MutableLiveData<ErrorState?>()
     val errorLiveData: MutableLiveData<ErrorState?> get() = errorState
+
     init {
         // Initialize with the complete data
         gitHubRepositoryList.value = emptyList()
     }
 
+    /**
+     * Searches GitHub repositories based on the provided input text.
+     *
+     * @param inputText The text to search for GitHub repositories.
+     */
     fun searchResults(inputText: String) {
         logMessage("Searching GitHub repositories with input: $inputText")
         viewModelScope.launch {
@@ -50,6 +66,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Clears the error state when the ViewModel is cleared.
+     */
     override fun onCleared() {
         super.onCleared()
         errorState.value = null
@@ -57,7 +76,11 @@ class HomeViewModel @Inject constructor(
         logMessage("ViewModel cleared")
     }
 
-
+    /**
+     * Helper function for logging messages with a specified tag.
+     *
+     * @param message The message to be logged.
+     */
     private fun logMessage(message: String) {
         Log.d("SearchViewModel", message)
     }

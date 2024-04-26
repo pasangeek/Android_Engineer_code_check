@@ -53,6 +53,7 @@ class HomeFragment : Fragment() {
         initiateGithubAccountAdapter()
         initObservers()
     }
+
     /**
      * Initialize observers for LiveData updates.
      */
@@ -81,6 +82,7 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
     /**
      * Initialize search functionality and observe input changes.
      */
@@ -95,7 +97,8 @@ class HomeFragment : Fragment() {
                             viewModel.searchResults(searchText)
                             logMessage("Search initiated with query: $searchText")
                         } else {
-                            viewModel.errorState.value = ErrorState.Error("No internet connection available")
+                            viewModel.errorState.value =
+                                ErrorState.Error("No internet connection available")
                         }
                     }
                 } else {
@@ -110,6 +113,7 @@ class HomeFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
         })
     }
+
     /**
      * Initialize RecyclerView adapter.
      */
@@ -129,6 +133,7 @@ class HomeFragment : Fragment() {
         // Log message to indicate the completion of initialization
         Log.d("HomeFragment", "RecyclerView adapter initialized")
     }
+
     /**
      * Initialize GitHub repository adapter.
      */
@@ -146,7 +151,6 @@ class HomeFragment : Fragment() {
         initializeSearch()
     }
 
-
     /**
      * Navigate to the RepositoryFragment with the selected repository item.
      *
@@ -154,10 +158,11 @@ class HomeFragment : Fragment() {
      */
     fun gotoRepositoryFragment(item: GithubRepositoryData) {
         val action =
-            HomeFragmentDirections.actionHomeFragment2ToRepositoryDetailFragment2(repositoryArgument= item)
+            HomeFragmentDirections.actionHomeFragment2ToRepositoryDetailFragment2(repositoryArgument = item)
         findNavController().navigate(action)
         logMessage("Navigating to RepositoryDetailFragment with item: ${item.name}")
     }
+
     /**
      * Initialize error dialog.
      */
@@ -169,17 +174,17 @@ class HomeFragment : Fragment() {
                     val dialogFragment = ErrorDialog(errorState.message, viewModel)
                     dialogFragment.show(childFragmentManager, "ErrorDialog")
                 }
+
                 null -> {
                     // Handle null case
                     Log.e("ErrorDialog", "Received null error state")
                 }
-
-
             }
 
             // Handle other dialog_fragment states as needed
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         // Clearing the binding reference
