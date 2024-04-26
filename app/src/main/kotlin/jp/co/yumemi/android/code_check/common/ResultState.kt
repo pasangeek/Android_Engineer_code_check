@@ -1,5 +1,7 @@
 package jp.co.yumemi.android.code_check.common
-
+/**
+ * Sealed class representing different states of a result.
+ */
 sealed class ResultState {
     // Represents a loading state
     object Loading : ResultState()
