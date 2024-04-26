@@ -13,6 +13,4 @@ import jp.co.yumemi.android.code_check.R
  */
 @AndroidEntryPoint
 class TopActivity : AppCompatActivity(R.layout.activity_top) {
-
-
 }
