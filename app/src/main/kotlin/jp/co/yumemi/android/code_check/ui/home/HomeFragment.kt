@@ -21,6 +21,7 @@ import jp.co.yumemi.android.code_check.common.show
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
 import jp.co.yumemi.android.code_check.ui.adapters.GithubRepositoryDetailAdapter
+import jp.co.yumemi.android.code_check.ui.error_dialog.ErrorDialog
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -47,7 +48,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initializeRecycleViewAdapter()
-
+        initializeErrorDialog()
         initiateGithubAccountAdapter()
         initObservers()
     }
@@ -83,26 +84,30 @@ class HomeFragment : Fragment() {
      * Initialize search functionality and observe input changes.
      */
     private fun initializeSearch() {
-        binding?.searchInputText?.setOnEditorActionListener { editText, action, _ ->
-            if (action == EditorInfo.IME_ACTION_SEARCH) {
-                // Get the text from the input field
-                val searchText = editText.text.toString()
-
-                if (searchText.isEmpty()) {
-                    // Show a message if the search input is empty
-                    viewModel.errorState.value = ErrorState.Error("search input is empty")
+        binding?.searchInputText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val searchText = s?.toString() ?: ""
+                if (searchText.isNotEmpty()) {
+                    viewModel.isOnline.observe(viewLifecycleOwner) { isOnline ->
+                        if (isOnline) {
+                            viewModel.searchResults(searchText)
+                            logMessage("Search initiated with query: $searchText")
+                        } else {
+                            viewModel.errorState.value = ErrorState.Error("No internet connection available")
+                        }
+                    }
                 } else {
-                    // Trigger a search when the search action is performed
-                    viewModel.searchResults(searchText)
-                    logMessage("Search initiated with query: $searchText")
-
-                    // Hide the keyboard after initiating the search
-
+                    binding?.apply {
+                        searchInputText.error = "Please enter a search query"
+                        githubRepositoryDetailAdapter.submitList(emptyList())
+                    }
+                    logMessage("Search query cleared")
                 }
-                return@setOnEditorActionListener true
             }
-            return@setOnEditorActionListener false
-        }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     private fun initializeRecycleViewAdapter() {
@@ -148,7 +153,25 @@ class HomeFragment : Fragment() {
         findNavController().navigate(action)
         logMessage("Navigating to RepositoryDetailFragment with item: ${item.name}")
     }
+    private fun initializeErrorDialog() {
 
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { errorState ->
+            when (errorState) {
+                is ErrorState.Error -> {
+                    val dialogFragment = ErrorDialog(errorState.message, viewModel)
+                    dialogFragment.show(childFragmentManager, "ErrorDialog")
+                }
+                null -> {
+                    // Handle null case
+                    Log.e("ErrorDialog", "Received null error state")
+                }
+
+
+            }
+
+            // Handle other dialog_fragment states as needed
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         // Clearing the binding reference
