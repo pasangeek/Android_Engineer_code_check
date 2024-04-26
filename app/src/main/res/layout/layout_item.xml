@@ -21,6 +21,7 @@
 
             <ImageView
                 android:id="@+id/iv_owner"
+                android:contentDescription="@string/owner_image"
                 android:layout_width="@dimen/_95dp"
                 android:layout_height="@dimen/_95dp"
                 android:scaleType="fitXY" />
@@ -34,12 +35,7 @@
                 android:layout_weight="1"
                 android:text="@string/repository_name"
                 android:textAppearance="?android:textAppearanceMedium" />
-            <!-- Heart Icon -->
-            <ImageView
-                android:id="@+id/iv_heart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_8dp" />
+
 
         </LinearLayout>
 
