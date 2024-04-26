@@ -1,10 +1,9 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'com.google.devtools.ksp'
-    id 'kotlin-parcelize'
-    id 'androidx.navigation.safeargs.kotlin'
-    id 'dagger.hilt.android.plugin'
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -36,61 +35,81 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 }
 
 dependencies {
 
-    implementation libs.androidx.core.ktx.v1130
-    implementation libs.androidx.appcompat
-    implementation libs.material.v1100
-    implementation libs.androidx.constraintlayout
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
+
     //  ———  Recyclerview ——— //
-    implementation libs.androidx.recyclerview
+    implementation(libs.androidx.recyclerview)
+
     // ——— lifecycle & ViewModel ——— //
-    implementation libs.androidx.lifecycle.viewmodel.ktx.v262
-    implementation libs.androidx.lifecycle.livedata.ktx.v262
-    implementation libs.androidx.lifecycle.runtime.ktx.v262
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+
     // ——— Android Navigation component ——— //
-    implementation libs.androidx.navigation.fragment.ktx.v275
-    implementation libs.androidx.navigation.ui.ktx.v275
-    // ——— ActivityTestRule ——— //
-    androidTestImplementation libs.androidx.test.rules
-    androidTestImplementation libs.androidx.test.runner
-    //———   testing   ——— //
-    androidTestImplementation libs.androidx.fragment.testing
-    androidTestImplementation libs.androidx.core.testing
-    // ——— Mockito for Test ——— //
-    testImplementation libs.mockito.core.v3124
-    testImplementation libs.mockito.android.v333
-    androidTestImplementation libs.kotlin.reflect
-    testImplementation libs.powermock.api.mockito2
-    androidTestImplementation libs.mockito.kotlin
-    androidTestImplementation libs.mockito.android.v377
-    androidTestImplementation libs.mockwebserver
-    androidTestImplementation libs.mockito.core.v400
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
+    //  ——— Dagger - Hilt ——— //
+    implementation(libs.hilt.android)
+    implementation(libs.legacy.support.v4)
+    implementation(libs.annotation)
+    implementation(libs.core.ktx)
+    implementation(libs.androidx.test.ext)
+    testImplementation(libs.junit.jupiter)
+    ksp(libs.hilt.compiler)
 
-    //——— Dagger - Hilt ——— //
-    implementation libs.hilt.android.v2481
-    ksp libs.hilt.android.compiler.v2481
-    androidTestImplementation libs.hilt.android.testing.v2405
+    // ——— AndroidX libraries ———//
+    implementation(libs.androidx.window)
+    implementation(libs.androidx.preference.ktx)
 
-    //  ———  retrofit ——— ++
-    implementation libs.retrofit.v290
-    implementation libs.converter.gson.v290
+    //  ———  retrofit ——— //
+    implementation(libs.retrofit.core)
+    implementation(libs.converter.gson)
 
-    //  ———  coroutines ——— ++
-    implementation libs.kotlinx.coroutines.core.v164
-    implementation libs.kotlinx.coroutines.android.v171
+    //  ———  coroutines ——— //
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     //  ———  Image Library ——— //
     implementation libs.coil
 
 
+    // ——— ActivityTestRule ——— //
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.runner)
+
+    //  ——— Testing Library ——— //
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.espresso.contrib)
+    androidTestImplementation(libs.hamcrest)
+
+    // ——— Mockito for Test ——— //
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.android)
+
+    implementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.androidx.fragment.testing)
+
+
+    // ——— Coroutine Test ——— //
+    implementation(libs.kotlinx.coroutines.test)
+
 
     implementation libs.lottie
 
-
-
+    // Room components
+    implementation libs.room.runtime
+    annotationProcessor libs.room.compiler
+    implementation libs.room.ktx
 }

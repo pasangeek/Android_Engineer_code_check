@@ -1,40 +1,59 @@
-/*
- * Copyright © 2021 YUMEMI Inc. All rights reserved.
- */
 package jp.co.yumemi.android.code_check.ui.repository_detail
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import coil.load
-import jp.co.yumemi.android.code_check.R
-import jp.co.yumemi.android.code_check.activities.TopActivity.Companion.lastSearchDate
-import jp.co.yumemi.android.code_check.databinding.FragmentTwoBinding
+import dagger.hilt.android.AndroidEntryPoint
+import jp.co.yumemi.android.code_check.databinding.FragmentRepositoryDetailBinding
+@AndroidEntryPoint
+class RepositoryDetailFragment : Fragment() {
 
-class TwoFragment : Fragment(R.layout.fragment_two) {
+    private val args: RepositoryDetailFragmentArgs by navArgs()
+    private var binding: FragmentRepositoryDetailBinding? = null // Change to nullable
+    private lateinit var viewModel: RepositoryDetailViewModel
 
-    private val args: TwoFragmentArgs by navArgs()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return FragmentRepositoryDetailBinding.inflate(inflater, container, false).also {
+            binding = it
 
-    private var binding: FragmentTwoBinding? = null
-    private val _binding get() = binding!!
+        }.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("検索した日時", lastSearchDate.toString())
+        viewModel = ViewModelProvider(this)[RepositoryDetailViewModel::class.java]
 
-        binding = FragmentTwoBinding.bind(view)
+        binding?.apply {
+            detailsVM = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
 
-        var item = args.item
+        viewModel.setRepositoryDetails(args.repositoryArgument)
+        logMessage("Repository details set")
 
-        _binding.ownerIconView.load(item.ownerIconUrl);
-        _binding.nameView.text = item.name;
-        _binding.languageView.text = item.language;
-        _binding.starsView.text = "${item.stargazersCount} stars";
-        _binding.watchersView.text = "${item.watchersCount} watchers";
-        _binding.forksView.text = "${item.forksCount} forks";
-        _binding.openIssuesView.text = "${item.openIssuesCount} open issues";
+        observeRepositoryDetail()
+    }
+    private fun observeRepositoryDetail() {
+        viewModel.gitHubRepositoryDetails.observe(viewLifecycleOwner) { repositoryDetail ->
+            repositoryDetail?.let {
+                binding?.ownerIconView?.load(repositoryDetail.owner?.avatarUrl) {
+
+                }
+            }
+        }
+    }
+    // Helper function for logging messages with a specified tag
+    private fun logMessage(message: String) {
+        Log.d("RepositoryDetailFragment", message)
     }
 }

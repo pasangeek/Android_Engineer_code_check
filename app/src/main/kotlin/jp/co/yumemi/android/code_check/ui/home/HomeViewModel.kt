@@ -1,88 +1,54 @@
-/*
- * Copyright © 2021 YUMEMI Inc. All rights reserved.
- */
 package jp.co.yumemi.android.code_check.ui.home
 
-import android.content.Context
-import android.os.Parcelable
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.engine.android.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import jp.co.yumemi.android.code_check.R
-import jp.co.yumemi.android.code_check.activities.TopActivity.Companion.lastSearchDate
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
-import kotlinx.parcelize.Parcelize
-import org.json.JSONObject
-import java.util.*
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jp.co.yumemi.android.code_check.common.ResultState
+import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
+import jp.co.yumemi.android.code_check.repository.GithubRepository
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-/**
- * TwoFragment で使う
- */
-class OneViewModel(
-    val context: Context
-) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val githubRepository: GithubRepository,
+) :ViewModel() {
 
-    // 検索結果
-    fun searchResults(inputText: String): List<item> = runBlocking {
-        val client = HttpClient(Android)
 
-        return@runBlocking GlobalScope.async {
-            val response: HttpResponse = client?.get("https://api.github.com/search/repositories") {
-                header("Accept", "application/vnd.github.v3+json")
-                parameter("q", inputText)
+    val responseGithubRepositoryList = MutableLiveData<ResultState>()
+    val gitHubRepositoryList= MutableLiveData<List<GithubRepositoryData>> ()
+
+
+    init {
+        // Initialize with the complete data
+        gitHubRepositoryList.value = emptyList()
+    }
+
+    fun searchResults(inputText: String) {
+        logMessage("Searching GitHub repositories with input: $inputText")
+        viewModelScope.launch {
+            try {
+                val serverResponse = githubRepository.getGitHubAccountFromDataSource(inputText)
+                    .firstOrNull()
+
+                if (serverResponse != null) {
+                    logMessage("Search results received: ${serverResponse.items.size} items")
+                    responseGithubRepositoryList.value = ResultState.Success(serverResponse.items)
+                }
+            } catch (e: Exception) {
+                logMessage("Error during repository_search: ${e.message}")
+
             }
+        }
+    }
 
-            val jsonBody = JSONObject(response.receive<String>())
 
-            val jsonItems = jsonBody.optJSONArray("items")!!
 
-            val items = mutableListOf<item>()
 
-            /**
-             * アイテムの個数分ループする
-             */
-            for (i in 0 until jsonItems.length()) {
-                val jsonItem = jsonItems.optJSONObject(i)!!
-                val name = jsonItem.optString("full_name")
-                val ownerIconUrl = jsonItem.optJSONObject("owner")!!.optString("avatar_url")
-                val language = jsonItem.optString("language")
-                val stargazersCount = jsonItem.optLong("stargazers_count")
-                val watchersCount = jsonItem.optLong("watchers_count")
-                val forksCount = jsonItem.optLong("forks_conut")
-                val openIssuesCount = jsonItem.optLong("open_issues_count")
-
-                items.add(
-                    item(
-                        name = name,
-                        ownerIconUrl = ownerIconUrl,
-                        language = context.getString(R.string.written_language, language),
-                        stargazersCount = stargazersCount,
-                        watchersCount = watchersCount,
-                        forksCount = forksCount,
-                        openIssuesCount = openIssuesCount
-                    )
-                )
-            }
-
-            lastSearchDate = Date()
-
-            return@async items.toList()
-        }.await()
+    private fun logMessage(message: String) {
+        Log.d("SearchViewModel", message)
     }
 }
-
-@Parcelize
-data class item(
-    val name: String,
-    val ownerIconUrl: String,
-    val language: String,
-    val stargazersCount: Long,
-    val watchersCount: Long,
-    val forksCount: Long,
-    val openIssuesCount: Long,
-) : Parcelable
