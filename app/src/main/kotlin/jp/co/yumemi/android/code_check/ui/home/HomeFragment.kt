@@ -1,19 +1,17 @@
 package jp.co.yumemi.android.code_check.ui.home
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.common.ErrorState
 import jp.co.yumemi.android.code_check.common.ResultState
 import jp.co.yumemi.android.code_check.common.gone
@@ -23,6 +21,9 @@ import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
 import jp.co.yumemi.android.code_check.ui.adapters.GithubRepositoryDetailAdapter
 import jp.co.yumemi.android.code_check.ui.error_dialog.ErrorDialog
 
+/**
+ * Fragment responsible for displaying and managing the home screen UI.
+ */
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
@@ -109,7 +110,9 @@ class HomeFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {}
         })
     }
-
+    /**
+     * Initialize RecyclerView adapter.
+     */
     private fun initializeRecycleViewAdapter() {
         // Initializing the RecyclerView adapter
         Log.d("HomeFragment", "Initializing RecyclerView adapter")
@@ -126,7 +129,9 @@ class HomeFragment : Fragment() {
         // Log message to indicate the completion of initialization
         Log.d("HomeFragment", "RecyclerView adapter initialized")
     }
-
+    /**
+     * Initialize GitHub repository adapter.
+     */
     private fun initiateGithubAccountAdapter() {
 
 // Setting the RecyclerView adapter
@@ -153,6 +158,9 @@ class HomeFragment : Fragment() {
         findNavController().navigate(action)
         logMessage("Navigating to RepositoryDetailFragment with item: ${item.name}")
     }
+    /**
+     * Initialize error dialog.
+     */
     private fun initializeErrorDialog() {
 
         viewModel.errorLiveData.observe(viewLifecycleOwner) { errorState ->
@@ -179,7 +187,11 @@ class HomeFragment : Fragment() {
         logMessage("View destroyed")
     }
 
-    // Helper function for logging messages with a specified tag
+    /**
+     * Helper function for logging messages with a specified tag.
+     *
+     * @param message The message to be logged.
+     */
     private fun logMessage(message: String) {
         Log.d("SearchFragment", message)
     }
