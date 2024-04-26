@@ -11,6 +11,9 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.databinding.FragmentRepositoryDetailBinding
+/**
+ * Fragment responsible for displaying details of a GitHub repository.
+ */
 @AndroidEntryPoint
 class RepositoryDetailFragment : Fragment() {
 
@@ -40,9 +43,12 @@ class RepositoryDetailFragment : Fragment() {
 
         viewModel.setRepositoryDetails(args.repositoryArgument)
         logMessage("Repository details set")
-
         observeRepositoryDetail()
     }
+
+    /**
+     * Observes changes in repository details and updates the UI accordingly.
+     */
     private fun observeRepositoryDetail() {
         viewModel.gitHubRepositoryDetails.observe(viewLifecycleOwner) { repositoryDetail ->
             repositoryDetail?.let {
@@ -52,7 +58,12 @@ class RepositoryDetailFragment : Fragment() {
             }
         }
     }
-    // Helper function for logging messages with a specified tag
+
+    /**
+     * Helper function for logging messages with a specified tag.
+     *
+     * @param message The message to be logged.
+     */
     private fun logMessage(message: String) {
         Log.d("RepositoryDetailFragment", message)
     }

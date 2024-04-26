@@ -1,19 +1,17 @@
 package jp.co.yumemi.android.code_check.ui.home
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.common.ErrorState
 import jp.co.yumemi.android.code_check.common.ResultState
 import jp.co.yumemi.android.code_check.common.gone
@@ -21,7 +19,11 @@ import jp.co.yumemi.android.code_check.common.show
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
 import jp.co.yumemi.android.code_check.ui.adapters.GithubRepositoryDetailAdapter
+import jp.co.yumemi.android.code_check.ui.error_dialog.ErrorDialog
 
+/**
+ * Fragment responsible for displaying and managing the home screen UI.
+ */
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
@@ -47,10 +49,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initializeRecycleViewAdapter()
-
+        initializeErrorDialog()
         initiateGithubAccountAdapter()
         initObservers()
     }
+
     /**
      * Initialize observers for LiveData updates.
      */
@@ -79,32 +82,41 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
     /**
      * Initialize search functionality and observe input changes.
      */
     private fun initializeSearch() {
-        binding?.searchInputText?.setOnEditorActionListener { editText, action, _ ->
-            if (action == EditorInfo.IME_ACTION_SEARCH) {
-                // Get the text from the input field
-                val searchText = editText.text.toString()
-
-                if (searchText.isEmpty()) {
-                    // Show a message if the search input is empty
-                    viewModel.errorState.value = ErrorState.Error("search input is empty")
+        binding?.searchInputText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val searchText = s?.toString() ?: ""
+                if (searchText.isNotEmpty()) {
+                    viewModel.isOnline.observe(viewLifecycleOwner) { isOnline ->
+                        if (isOnline) {
+                            viewModel.searchResults(searchText)
+                            logMessage("Search initiated with query: $searchText")
+                        } else {
+                            viewModel.errorState.value =
+                                ErrorState.Error("No internet connection available")
+                        }
+                    }
                 } else {
-                    // Trigger a search when the search action is performed
-                    viewModel.searchResults(searchText)
-                    logMessage("Search initiated with query: $searchText")
-
-                    // Hide the keyboard after initiating the search
-
+                    binding?.apply {
+                        searchInputText.error = "Please enter a search query"
+                        githubRepositoryDetailAdapter.submitList(emptyList())
+                    }
+                    logMessage("Search query cleared")
                 }
-                return@setOnEditorActionListener true
             }
-            return@setOnEditorActionListener false
-        }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
+    /**
+     * Initialize RecyclerView adapter.
+     */
     private fun initializeRecycleViewAdapter() {
         // Initializing the RecyclerView adapter
         Log.d("HomeFragment", "Initializing RecyclerView adapter")
@@ -122,6 +134,9 @@ class HomeFragment : Fragment() {
         Log.d("HomeFragment", "RecyclerView adapter initialized")
     }
 
+    /**
+     * Initialize GitHub repository adapter.
+     */
     private fun initiateGithubAccountAdapter() {
 
 // Setting the RecyclerView adapter
@@ -136,7 +151,6 @@ class HomeFragment : Fragment() {
         initializeSearch()
     }
 
-
     /**
      * Navigate to the RepositoryFragment with the selected repository item.
      *
@@ -144,9 +158,31 @@ class HomeFragment : Fragment() {
      */
     fun gotoRepositoryFragment(item: GithubRepositoryData) {
         val action =
-            HomeFragmentDirections.actionHomeFragment2ToRepositoryDetailFragment2(repositoryArgument= item)
+            HomeFragmentDirections.actionHomeFragment2ToRepositoryDetailFragment2(repositoryArgument = item)
         findNavController().navigate(action)
         logMessage("Navigating to RepositoryDetailFragment with item: ${item.name}")
+    }
+
+    /**
+     * Initialize error dialog.
+     */
+    private fun initializeErrorDialog() {
+
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { errorState ->
+            when (errorState) {
+                is ErrorState.Error -> {
+                    val dialogFragment = ErrorDialog(errorState.message, viewModel)
+                    dialogFragment.show(childFragmentManager, "ErrorDialog")
+                }
+
+                null -> {
+                    // Handle null case
+                    Log.e("ErrorDialog", "Received null error state")
+                }
+            }
+
+            // Handle other dialog_fragment states as needed
+        }
     }
 
     override fun onDestroyView() {
@@ -156,7 +192,11 @@ class HomeFragment : Fragment() {
         logMessage("View destroyed")
     }
 
-    // Helper function for logging messages with a specified tag
+    /**
+     * Helper function for logging messages with a specified tag.
+     *
+     * @param message The message to be logged.
+     */
     private fun logMessage(message: String) {
         Log.d("SearchFragment", message)
     }

@@ -30,6 +30,7 @@
     <dimen name="_14sp">14sp</dimen>
     <dimen name="_13sp">13sp</dimen>
     <dimen name="_12sp">12sp</dimen>
+    <dimen name="_18sp">18sp</dimen>
     <!-- imageCardView -->
     <dimen name="imageCardView_width">200dp</dimen>
     <dimen name="imageCardView_height">200dp</dimen>
@@ -39,6 +40,7 @@
     <dimen name="language_view_margin">10dp</dimen>
     <!-- openIssuesView -->
     <dimen name="openIssuesView_marginTop">12dp</dimen>
+    <dimen name="_16sp">16sp</dimen>
 
 
 </resources>
