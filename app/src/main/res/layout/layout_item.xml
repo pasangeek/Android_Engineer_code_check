@@ -8,7 +8,6 @@
     app:cardCornerRadius="@dimen/_20dp"
     app:cardElevation="@dimen/_4dp">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,9 +20,9 @@
 
             <ImageView
                 android:id="@+id/iv_owner"
-                android:contentDescription="@string/owner_image"
                 android:layout_width="@dimen/_95dp"
                 android:layout_height="@dimen/_95dp"
+                android:contentDescription="@string/owner_image"
                 android:scaleType="fitXY" />
 
             <TextView
@@ -35,8 +34,6 @@
                 android:layout_weight="1"
                 android:text="@string/repository_name"
                 android:textAppearance="?android:textAppearanceMedium" />
-
-
         </LinearLayout>
 
         <View
@@ -45,6 +42,5 @@
             android:background="#03A9F4" />
 
     </LinearLayout>
-
 
 </androidx.cardview.widget.CardView>
