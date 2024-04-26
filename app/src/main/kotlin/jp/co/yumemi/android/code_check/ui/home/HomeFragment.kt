@@ -2,6 +2,8 @@ package jp.co.yumemi.android.code_check.ui.home
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +14,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
+import jp.co.yumemi.android.code_check.common.ErrorState
+import jp.co.yumemi.android.code_check.common.ResultState
+import jp.co.yumemi.android.code_check.common.gone
+import jp.co.yumemi.android.code_check.common.show
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
 import jp.co.yumemi.android.code_check.ui.adapters.GithubRepositoryDetailAdapter
@@ -43,8 +49,39 @@ class HomeFragment : Fragment() {
         initializeRecycleViewAdapter()
 
         initiateGithubAccountAdapter()
+        initObservers()
     }
+    /**
+     * Initialize observers for LiveData updates.
+     */
+    private fun initObservers() {
+        viewModel.responseGithubRepositoryList.observe(viewLifecycleOwner) { resultState ->
+            when (resultState) {
+                is ResultState.Success<*> -> {
+                    binding?.apply {
+                        progressBar.gone()
+                        animationView.gone()
+                    }
+                    val data = resultState.result as? List<GithubRepositoryData>
+                    data?.let {
+                        githubRepositoryDetailAdapter.submitList(it)
+                        Log.d("SearchFragment", "GitHub repository list updated")
+                    } ?: Log.e("SearchFragment", "Data is not of type List<GithubRepositoryData>")
+                }
 
+                is ResultState.Loading -> {
+                    binding?.progressBar?.show()
+                }
+
+                is ResultState.Failure -> {
+                    binding?.progressBar?.gone()
+                }
+            }
+        }
+    }
+    /**
+     * Initialize search functionality and observe input changes.
+     */
     private fun initializeSearch() {
         binding?.searchInputText?.setOnEditorActionListener { editText, action, _ ->
             if (action == EditorInfo.IME_ACTION_SEARCH) {
@@ -53,7 +90,7 @@ class HomeFragment : Fragment() {
 
                 if (searchText.isEmpty()) {
                     // Show a message if the search input is empty
-
+                    viewModel.errorState.value = ErrorState.Error("search input is empty")
                 } else {
                     // Trigger a search when the search action is performed
                     viewModel.searchResults(searchText)
