@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
 import java.util.*
+/**
+ * Top-level activity in the application.
+ * Annotated with [@AndroidEntryPoint] for Hilt dependency injection.
+ */
 @AndroidEntryPoint
 class TopActivity : AppCompatActivity(R.layout.activity_top) {
 
