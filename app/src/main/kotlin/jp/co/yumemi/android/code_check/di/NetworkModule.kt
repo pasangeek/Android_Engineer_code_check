@@ -1,11 +1,14 @@
 package jp.co.yumemi.android.code_check.di
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import jp.co.yumemi.android.code_check.common.ConstantNetworkService.BASE_URL
+import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
 import jp.co.yumemi.android.code_check.repository.GithubRepository
 import jp.co.yumemi.android.code_check.sources.GithubRepositoryApiService
 import okhttp3.OkHttpClient
@@ -17,7 +20,17 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    @Singleton
+    @Provides
+    fun provideApplicationContext(application: Application): Context {
+        return application
+    }
 
+    @Singleton
+    @Provides
+    fun provideConnectivityRepository(context: Context): ConnectivityRepository {
+        return ConnectivityRepository(context)
+    }
     /**
      * Provides the base URL used for network requests.
      */
