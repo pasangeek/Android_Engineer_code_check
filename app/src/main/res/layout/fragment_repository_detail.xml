@@ -15,105 +15,197 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ownerIconView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="16dp"
-            android:contentDescription="@null"
-            android:src="@drawable/jetbrains"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_max="240dp" />
 
-        <TextView
-            android:id="@+id/nameView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@{detailsVM.gitHubRepositoryDetails.name}"
-            android:textColor="@color/black"
-            android:textSize="18sp"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/backButton"
+            android:contentDescription="@string/navigate_back"
+            android:layout_width="@dimen/backButton_width"
+            android:layout_height="@dimen/backButton_height"
+            android:layout_marginEnd="@dimen/backButton_marginEnd"
+            android:layout_marginBottom="@dimen/backButton_marginBottom"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ownerIconView" />
+            app:maxImageSize="20dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+            android:focusable="true" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/centerGuid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/linearLayout_Main"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-        <TextView
-            android:id="@+id/languageView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@{String.format(@string/written_language,detailsVM.gitHubRepositoryDetails.language)}"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/nameView"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/starsView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@{detailsVM.gitHubRepositoryDetails.stargazersCount}"
-            android:textAlignment="textEnd"
-            android:textColor="@color/black"
-            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/centerGuid"
-            app:layout_constraintTop_toBottomOf="@id/nameView" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/watchersView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@{detailsVM.gitHubRepositoryDetails.watchersCount}"
-            android:textAlignment="textEnd"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/centerGuid"
-            app:layout_constraintTop_toBottomOf="@id/starsView" />
 
-        <TextView
-            android:id="@+id/forksView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@{detailsVM.gitHubRepositoryDetails.forksCount}"
-            android:textAlignment="textEnd"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="@id/centerGuid"
-            app:layout_constraintTop_toBottomOf="@id/watchersView" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30dp"
+                android:layout_marginTop="@dimen/_30dp"
+                android:layout_marginEnd="@dimen/_30dp"
+                android:background="@drawable/border"
+                android:gravity="center|top"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/openIssuesView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@{detailsVM.gitHubRepositoryDetails.openIssuesCount}"
-            android:textAlignment="textEnd"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/centerGuid"
-            app:layout_constraintTop_toBottomOf="@id/forksView" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/imageCardView"
+                    android:layout_width="@dimen/imageCardView_width"
+                    android:layout_height="@dimen/imageCardView_height"
+                    android:layout_marginTop="@dimen/imageCardView_marginTop"
+                    android:elevation="@dimen/cardview_default_elevation"
+                    app:cardCornerRadius="@dimen/cardview_default_radius">
+
+                    <ImageView
+                        android:id="@+id/ownerIconView"
+                        android:contentDescription="@string/owner_s_profile_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ic_user"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/nameView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:layout_marginTop="@dimen/name_view_margin_top"
+                    android:text="@{detailsVM.gitHubRepositoryDetails.name}" />
+
+
+                <TextView
+                    android:id="@+id/languageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_light"
+                    android:layout_margin="@dimen/language_view_margin"
+                    android:text="@{String.format(@string/written_language,detailsVM.gitHubRepositoryDetails.language)}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="30dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/stars_count_box"
+                    android:layout_width="@dimen/_110dp"
+                    android:layout_height="@dimen/_100dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10dp"
+                    android:textAllCaps="false">
+
+                    <TextView
+                        android:id="@+id/starsView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_12dp"
+                        android:text="@{detailsVM.gitHubRepositoryDetails.stargazersCount}" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/stars"
+                        android:textSize="@dimen/_14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/watchers_count_box"
+                    android:layout_width="@dimen/_110dp"
+                    android:layout_height="@dimen/_100dp"
+                    android:layout_marginStart="@dimen/_6dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10dp"
+                    android:textAllCaps="false">
+
+                    <TextView
+                        android:id="@+id/watchersView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{detailsVM.gitHubRepositoryDetails.watchersCount}" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/watchers"
+                        android:textSize="@dimen/_13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/forks_count_box"
+                    android:layout_width="@dimen/_110dp"
+                    android:layout_height="@dimen/_100dp"
+                    android:layout_marginStart="@dimen/_6dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10dp"
+                    android:textAllCaps="false">
+
+                    <TextView
+                        android:id="@+id/forksView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_12dp"
+                        android:text="@{detailsVM.gitHubRepositoryDetails.forksCount}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/forks"
+                        android:textSize="@dimen/_14sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_30dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginRight="@dimen/_30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/openIssuesView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:text="@{detailsVM.gitHubRepositoryDetails.openIssuesCount}" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/open_issues"
+                    android:textSize="@dimen/_14sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
