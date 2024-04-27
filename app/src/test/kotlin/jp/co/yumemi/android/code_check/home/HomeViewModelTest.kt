@@ -14,14 +14,17 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -100,5 +103,18 @@ class HomeViewModelTest{
 
         // Then
         Assert.assertNull(viewModel.errorState.value)
+    }
+
+    @Test
+    fun `test searchResults error`() = runBlockingTest {
+        // Given
+        val exception = RuntimeException("Some network error")
+        `when`(githubRepository.getGitHubAccountFromDataSource("query")).thenThrow(exception)
+
+        // When
+        viewModel.searchResults("query")
+
+        // Then
+        assertTrue(viewModel.errorLiveData.value is ErrorState.Error)
     }
 }
