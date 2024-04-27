@@ -27,27 +27,30 @@ import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-
+/**
+ * Unit tests for [HomeViewModel].
+ */
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class HomeViewModelTest{
     // Coroutine dispatcher for testing
     private val testDispatcher = TestCoroutineDispatcher()
+    // Rule to swap the background executor used by
+    // the Architecture Components
+    // with a different one that executes each task synchronously
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
-
-
+    // Mock dependencies
     @Mock
     private lateinit var githubRepository: GithubRepository
-
     // Mock the dependencies
     @Mock
     private lateinit var connectivityRepository: ConnectivityRepository
 
     private lateinit var viewModel: HomeViewModel
-    /*  @Mock
-      private lateinit var mockObserver: Observer<List<GithubRepositoryData>>
-  */
+    /**
+     * Set up the test environment.
+     */
     @Before
     fun setup() {
         // Initialize Mockito annotations
@@ -56,9 +59,12 @@ class HomeViewModelTest{
         Dispatchers.setMain(testDispatcher)
         Mockito.`when`(connectivityRepository.isConnected)
             .thenReturn(null)
+        // Initialize ViewModel
         viewModel = HomeViewModel(githubRepository, connectivityRepository)
     }
-
+    /**
+     * Test that isOnline is false when networkConnectivityRepository returns null.
+     */
     @Test
     fun `isOnline is false when networkConnectivityRepository returns null`() {
         // When
@@ -67,6 +73,9 @@ class HomeViewModelTest{
         // Then
         Assert.assertFalse(isOnlineValue ?: true)
     }
+    /**
+     * Test that searchResults updates responseGithubRepositoryList with successful response.
+     */
     @Test
     fun `searchResults updates responseGithubRepositoryList with successful response`() {
         // Given
@@ -92,7 +101,9 @@ class HomeViewModelTest{
             Assert.assertEquals(ResultState.Success(serverResponse.items), viewModel.responseGithubRepositoryList.value)
         }
     }
-
+    /**
+     * Test that onCleared clears errorState.
+     */
     @Test
     fun `onCleared clears errorState`() {
         // Given
