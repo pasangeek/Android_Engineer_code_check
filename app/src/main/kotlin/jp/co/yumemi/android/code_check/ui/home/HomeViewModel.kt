@@ -12,6 +12,7 @@ import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
 import jp.co.yumemi.android.code_check.repository.GithubRepository
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,7 +32,11 @@ class HomeViewModel @Inject constructor(
     connectivityRepository: ConnectivityRepository
 ) : ViewModel() {
     // LiveData to observe network connectivity status
-    val isOnline = connectivityRepository.isConnected.asLiveData()
+    val isOnline = connectivityRepository.isConnected
+        ?.map { it } // Use the Elvis operator to provide a default value
+        ?.asLiveData()
+        ?: MutableLiveData<Boolean>().apply { postValue(false) } // Provide a default value if networkConnectivityRepository.isConnected is null
+
     // LiveData to observe API response state
     val responseGithubRepositoryList = MutableLiveData<ResultState>()
     // LiveData to hold the list of GitHub repositories
