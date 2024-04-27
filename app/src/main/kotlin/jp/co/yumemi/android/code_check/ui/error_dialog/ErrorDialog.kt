@@ -16,7 +16,7 @@ import jp.co.yumemi.android.code_check.ui.home.HomeViewModel
  */
 class ErrorDialog(private val errorMessage: String, private val viewModel: HomeViewModel) :
     DialogFragment() {
-
+    // ViewBinding for the dialog fragment
     private var binding: FragmentErrorDialogBinding? = null
 
     override fun onCreateView(
@@ -24,14 +24,11 @@ class ErrorDialog(private val errorMessage: String, private val viewModel: HomeV
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentErrorDialogBinding.inflate(inflater, container, false)
-        // Set the error message in the view
-        val view = binding!!.root
-        // Set the error message in the view
-        binding!!.errorMessage.text = errorMessage
-        backToHomePageButton()
-
-        return view
+        return FragmentErrorDialogBinding.inflate(inflater, container, false).apply {
+            binding = this
+            errorMessage.text = this@ErrorDialog.errorMessage // Set the error message
+            backToHomePageButton() // Set up the "close" button click listener
+        }.root
     }
 
     private fun backToHomePageButton() {

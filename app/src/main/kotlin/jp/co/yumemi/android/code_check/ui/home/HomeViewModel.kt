@@ -30,11 +30,13 @@ class HomeViewModel @Inject constructor(
     private val githubRepository: GithubRepository,
     connectivityRepository: ConnectivityRepository
 ) : ViewModel() {
-
+    // LiveData to observe network connectivity status
     val isOnline = connectivityRepository.isConnected.asLiveData()
+    // LiveData to observe API response state
     val responseGithubRepositoryList = MutableLiveData<ResultState>()
+    // LiveData to hold the list of GitHub repositories
     val gitHubRepositoryList = MutableLiveData<List<GithubRepositoryData>>()
-
+    // LiveData to observe error state
     var errorState = MutableLiveData<ErrorState?>()
     val errorLiveData: MutableLiveData<ErrorState?> get() = errorState
 

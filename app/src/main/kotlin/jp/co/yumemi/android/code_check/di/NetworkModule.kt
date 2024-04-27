@@ -16,16 +16,23 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
-
+/**
+ * Dagger module providing network-related dependencies.
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    /**
+     * Provides the Application Context.
+     */
     @Singleton
     @Provides
     fun provideApplicationContext(application: Application): Context {
         return application
     }
-
+    /**
+     * Provides the NetworkConnectivityRepository instance with the application context.
+     */
     @Singleton
     @Provides
     fun provideConnectivityRepository(context: Context): ConnectivityRepository {

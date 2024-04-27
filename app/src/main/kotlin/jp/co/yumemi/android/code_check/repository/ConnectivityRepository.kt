@@ -6,7 +6,15 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
-
+/**
+ * Repository class responsible for monitoring network connectivity changes.
+ * It utilizes Android's ConnectivityManager to observe network availability.
+ *
+ * @property context The application context used to access system services.
+ * @property connectivityManager The ConnectivityManager instance to manage network connectivity.
+ * @property _isConnected MutableStateFlow representing the current network connectivity status.
+ * @property isConnected Flow representing the current network connectivity status as an observable stream.
+ */
 class ConnectivityRepository @Inject constructor(@ApplicationContext context: Context) {
 
     private val connectivityManager =

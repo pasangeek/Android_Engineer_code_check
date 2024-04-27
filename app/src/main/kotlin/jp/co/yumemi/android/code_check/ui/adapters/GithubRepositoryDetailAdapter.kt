@@ -8,15 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.LayoutItemBinding
-
+/**
+ * Adapter for displaying GitHub repository details in a RecyclerView.
+ *
+ * @param itemClickListener The click listener for items in the adapter.
+ */
 class GithubRepositoryDetailAdapter(
     private val itemClickListener: OnItemClickListener,
 ) : ListAdapter<GithubRepositoryData, GithubRepositoryDetailAdapter.ViewHolder>(diff_util) {
 
     /**
-     * Called when an item in the adapter is clicked.
-     *
-     * @param item The clicked GithubRepositoryData item.
+     * Interface definition for the click listener of items in the adapter.
      */
     interface OnItemClickListener {
         fun itemClick(repo: GithubRepositoryData)
@@ -34,14 +36,13 @@ class GithubRepositoryDetailAdapter(
         holder.bind(gitHubRepositoryItem)
 
     }
-
+    /**
+     * ViewHolder class for the adapter. Represents an item view in the RecyclerView.
+     *
+     * @param binding The ViewBinding object for the item layout.
+     */
     inner class ViewHolder(private val binding: LayoutItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        /**
-         * ViewHolder class for the adapter. Represents an item view in the RecyclerView.
-         *
-         * @param binding The ViewBinding object for the item layout.
-         */
         init {
             // Set a click listener for the item view
             itemView.setOnClickListener {
@@ -51,7 +52,11 @@ class GithubRepositoryDetailAdapter(
                 }
             }
         }
-
+        /**
+         * Binds the data to the ViewHolder.
+         *
+         * @param repo The GitHub repository data to bind.
+         */
         fun bind(repo: GithubRepositoryData) {
             with(binding) {
                 ivOwner.load(repo.owner?.avatarUrl)
