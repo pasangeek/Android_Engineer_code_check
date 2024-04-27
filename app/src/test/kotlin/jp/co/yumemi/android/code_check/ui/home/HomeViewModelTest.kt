@@ -8,7 +8,6 @@ import jp.co.yumemi.android.code_check.data.model.GithubServerResponse
 import jp.co.yumemi.android.code_check.data.model.Owner
 import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
 import jp.co.yumemi.android.code_check.repository.GithubRepository
-import jp.co.yumemi.android.code_check.ui.home.HomeViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -27,6 +26,7 @@ import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
+
 /**
  * Unit tests for [HomeViewModel].
  */

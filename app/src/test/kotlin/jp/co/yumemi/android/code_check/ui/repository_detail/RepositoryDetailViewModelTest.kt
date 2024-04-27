@@ -3,7 +3,6 @@ package jp.co.yumemi.android.code_check.ui.repository_detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
-import jp.co.yumemi.android.code_check.data.model.Owner
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.*
 import org.junit.Before
