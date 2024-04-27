@@ -1,6 +1,7 @@
 package jp.co.yumemi.android.code_check.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import jp.co.yumemi.android.code_check.common.ErrorState
 import jp.co.yumemi.android.code_check.common.ResultState
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.data.model.GithubServerResponse
@@ -89,5 +90,15 @@ class HomeViewModelTest{
         }
     }
 
+    @Test
+    fun `onCleared clears errorState`() {
+        // Given
+        viewModel.errorState.value = ErrorState.Error("Some error")
 
+        // When
+        viewModel.onCleared()
+
+        // Then
+        Assert.assertNull(viewModel.errorState.value)
+    }
 }

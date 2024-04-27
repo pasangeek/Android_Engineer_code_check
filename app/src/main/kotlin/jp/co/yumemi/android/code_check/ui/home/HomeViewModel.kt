@@ -75,7 +75,7 @@ class HomeViewModel @Inject constructor(
     /**
      * Clears the error state when the ViewModel is cleared.
      */
-    override fun onCleared() {
+    public override fun onCleared() {
         super.onCleared()
         errorState.value = null
         // Log when the ViewModel is cleared
