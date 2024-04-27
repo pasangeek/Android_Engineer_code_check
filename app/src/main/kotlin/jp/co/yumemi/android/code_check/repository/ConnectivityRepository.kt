@@ -15,7 +15,7 @@ import javax.inject.Inject
  * @property _isConnected MutableStateFlow representing the current network connectivity status.
  * @property isConnected Flow representing the current network connectivity status as an observable stream.
  */
-class ConnectivityRepository @Inject constructor(@ApplicationContext context: Context) {
+open class ConnectivityRepository @Inject constructor(@ApplicationContext context: Context) {
 
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
