@@ -38,7 +38,21 @@ class RepositoryDetailViewModelTest {
         assertEquals(null, viewModel.gitHubRepositoryDetails.value)
     }
 
+    @Test
+    fun `test setRepositoryDetails`() {
+        // Given
+        val repositoryData = GithubRepositoryData(
+            "RepoName",
+            null,
+            "Kotlin", "100", "50", "20", "5"
+        )
 
+        // When
+        viewModel.setRepositoryDetails(repositoryData)
+
+        // Then
+        assertEquals(repositoryData, viewModel.gitHubRepositoryDetails.value)
+    }
 
 
 }
