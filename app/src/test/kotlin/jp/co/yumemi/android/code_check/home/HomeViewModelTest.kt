@@ -1,11 +1,17 @@
 package jp.co.yumemi.android.code_check.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import jp.co.yumemi.android.code_check.common.ResultState
+import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
+import jp.co.yumemi.android.code_check.data.model.GithubServerResponse
+import jp.co.yumemi.android.code_check.data.model.Owner
 import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
 import jp.co.yumemi.android.code_check.repository.GithubRepository
 import jp.co.yumemi.android.code_check.ui.home.HomeViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert
@@ -57,7 +63,31 @@ class HomeViewModelTest{
         // Then
         Assert.assertFalse(isOnlineValue ?: true)
     }
+    @Test
+    fun `searchResults updates responseGithubRepositoryList with successful response`() {
+        // Given
+        val inputText = "android"
+        val serverResponse = GithubServerResponse(
+            1, false,
+            listOf(
+                GithubRepositoryData(
+                    "AndroidRepo",
+                    Owner("https://example.com/avatar.jpg"),
+                    "Kotlin", "100", "50", "20", "5"
+                )
+            )
+        )
+        runBlocking {
+            Mockito.`when`(githubRepository.getGitHubAccountFromDataSource(inputText))
+                .thenReturn(flowOf(serverResponse))
 
+            // When
+            viewModel.searchResults(inputText)
+
+            // Then
+            Assert.assertEquals(ResultState.Success(serverResponse.items), viewModel.responseGithubRepositoryList.value)
+        }
+    }
 
 
 }

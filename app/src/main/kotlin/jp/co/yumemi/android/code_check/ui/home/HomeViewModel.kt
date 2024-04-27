@@ -56,19 +56,18 @@ class HomeViewModel @Inject constructor(
      * @param inputText The text to search for GitHub repositories.
      */
     fun searchResults(inputText: String) {
-        logMessage("Searching GitHub repositories with input: $inputText")
         viewModelScope.launch {
             try {
                 val serverResponse = githubRepository.getGitHubAccountFromDataSource(inputText)
                     .firstOrNull()
 
                 if (serverResponse != null) {
-                    logMessage("Search results received: ${serverResponse.items.size} items")
+
                     responseGithubRepositoryList.value = ResultState.Success(serverResponse.items)
                 }
             } catch (e: Exception) {
-                logMessage("Error during repository_search: ${e.message}")
 
+                errorState.postValue(ErrorState.Error("Network error occurred: ${e.message}"))
             }
         }
     }
