@@ -54,5 +54,11 @@ class RepositoryDetailViewModelTest {
         assertEquals(repositoryData, viewModel.gitHubRepositoryDetails.value)
     }
 
+    @Test
+    fun `test onCleared`() {
+        // When
+        viewModel.onCleared()
 
+        // No assertion needed, just ensuring the method runs without error
+    }
 }
