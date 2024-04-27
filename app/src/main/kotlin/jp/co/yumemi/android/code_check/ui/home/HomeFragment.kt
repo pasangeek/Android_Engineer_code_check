@@ -47,11 +47,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initObservers()
         initializeRecycleViewAdapter()
         initializeErrorDialog()
         initiateGithubAccountAdapter()
-        initObservers()
+
     }
 
     /**
@@ -82,38 +82,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
-    /**
-     * Initialize search functionality and observe input changes.
-     */
-    private fun initializeSearch() {
-        binding?.searchInputText?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val searchText = s?.toString() ?: ""
-                if (searchText.isNotEmpty()) {
-                    viewModel.isOnline.observe(viewLifecycleOwner) { isOnline ->
-                        if (isOnline) {
-                            viewModel.searchResults(searchText)
-                            logMessage("Search initiated with query: $searchText")
-                        } else {
-                            viewModel.errorState.value =
-                                ErrorState.Error("No internet connection available")
-                        }
-                    }
-                } else {
-                    binding?.apply {
-                        searchInputText.error = "Please enter a search query"
-                        githubRepositoryDetailAdapter.submitList(emptyList())
-                    }
-                    logMessage("Search query cleared")
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {}
-        })
-    }
-
     /**
      * Initialize RecyclerView adapter.
      */
@@ -150,7 +118,57 @@ class HomeFragment : Fragment() {
 
         initializeSearch()
     }
+    /**
+     * Initialize search functionality and observe input changes.
+     */
+    private fun initializeSearch() {
+        binding?.searchInputText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val searchText = s?.trim().toString() // Trim the input to remove leading and trailing spaces
+
+                // Check if the trimmed search text is not empty and contains at least one non-space character
+                if (searchText.isNotBlank()) {
+                    // Check if the search text is valid (e.g., meets specific criteria)
+                    if (isSearchTextValid(searchText)) {
+                        viewModel.isOnline.observe(viewLifecycleOwner) { isOnline ->
+                            if (isOnline) {
+                                viewModel.searchResults(searchText)
+                                logMessage("Search initiated with query: $searchText")
+                            } else {
+                                viewModel.errorState.value =
+                                    ErrorState.Error("No internet connection available")
+                            }
+                        }
+                    } else {
+                        binding?.apply {
+                            searchInputText.error = "Please enter a valid search query"
+                            githubRepositoryDetailAdapter.submitList(emptyList())
+                        }
+                        logMessage("Invalid search query: $searchText")
+                    }
+                } else {
+                    binding?.apply {
+                        searchInputText.error = "Please enter a search query"
+                        githubRepositoryDetailAdapter.submitList(emptyList())
+                    }
+                    logMessage("Search query cleared")
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    /**
+     * Function to validate the search text.
+     * You can customize the validation logic as per your requirements.
+     */
+    private fun isSearchTextValid(searchText: String): Boolean {
+        // Example validation criteria: search text should not contain only spaces
+        return searchText.trim().isNotEmpty()
+    }
     /**
      * Navigate to the RepositoryFragment with the selected repository item.
      *
