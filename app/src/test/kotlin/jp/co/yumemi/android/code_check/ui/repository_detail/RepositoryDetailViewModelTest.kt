@@ -14,30 +14,44 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
+/**
+ * Unit tests for [RepositoryDetailViewModel].
+ */
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class RepositoryDetailViewModelTest {
-
+    // Executes each task synchronously using Architecture Components.
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    // Mock Observer for LiveData
     @Mock
     private lateinit var observer: Observer<GithubRepositoryData>
 
+    // ViewModel under test
     private lateinit var viewModel: RepositoryDetailViewModel
 
+    /**
+     * Setup the ViewModel and mocks.
+     */
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
         viewModel = RepositoryDetailViewModel()
     }
 
+    /**
+     * Test ViewModel initialization.
+     */
     @Test
     fun `test ViewModel initialization`() {
         // Verify that the LiveData is initially empty
         assertEquals(null, viewModel.gitHubRepositoryDetails.value)
     }
 
+    /**
+     * Test setting repository details.
+     */
     @Test
     fun `test setRepositoryDetails`() {
         // Given
@@ -54,6 +68,9 @@ class RepositoryDetailViewModelTest {
         assertEquals(repositoryData, viewModel.gitHubRepositoryDetails.value)
     }
 
+    /**
+     * Test ViewModel's onCleared method.
+     */
     @Test
     fun `test onCleared`() {
         // When
