@@ -18,9 +18,6 @@ class RepositoryDetailViewModel @Inject constructor() : ViewModel() {
     val gitHubRepositoryDetails: LiveData<GithubRepositoryData>
         get() = _githubRepositoryDetail
 
-    init {
-        logMessage("RepositoryDetail ViewModel initialized")
-    }
 
     /**
      * Sets the details of the GitHub repository.
@@ -29,23 +26,13 @@ class RepositoryDetailViewModel @Inject constructor() : ViewModel() {
      */
     fun setRepositoryDetails(githubRepositoryData: GithubRepositoryData) {
         _githubRepositoryDetail.value = githubRepositoryData
-        logMessage("Repository details set: $githubRepositoryData")
     }
 
     /**
      * Clears the ViewModel when it's no longer needed.
      */
-    override fun onCleared() {
+    public override fun onCleared() {
         super.onCleared()
-        logMessage("ViewModel cleared")
     }
 
-    /**
-     * Helper function for logging messages with a specified tag.
-     *
-     * @param message The message to be logged.
-     */
-    private fun logMessage(message: String) {
-        Log.d("RepositoryDetailViewModel", message)
-    }
 }

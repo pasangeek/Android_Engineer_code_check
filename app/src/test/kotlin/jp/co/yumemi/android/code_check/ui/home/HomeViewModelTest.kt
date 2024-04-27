@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.home
+package jp.co.yumemi.android.code_check.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import jp.co.yumemi.android.code_check.common.ErrorState
