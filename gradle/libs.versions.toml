@@ -111,6 +111,7 @@ window = "1.2.0"
 legacy-support-v4 = "1.0.0"
 annotation = "1.7.1"
 coreKtx = "1.5.0"
+kotlin1922 = "1.9.22"
 
 [libraries]
 accompanist-permissions = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "accompanist" }
@@ -261,3 +262,4 @@ annotation = { group = "androidx.annotation", name = "annotation", version.ref =
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtx" }
 
 [plugins]
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin1922" }
