@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment2">
 
@@ -20,4 +21,14 @@
             android:name="repository_argument"
             app:argType="jp.co.yumemi.android.code_check.data.model.GithubRepositoryData" />
     </fragment>
+    <fragment
+        android:id="@+id/favouriteRepositoryFragment"
+        android:name="jp.co.yumemi.android.code_check.ui.favourite_repo.FavouriteRepositoryFragment"
+        android:label="fragment_favourite_repository"
+        tools:layout="@layout/fragment_favourite_repository" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="jp.co.yumemi.android.code_check.ui.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>
