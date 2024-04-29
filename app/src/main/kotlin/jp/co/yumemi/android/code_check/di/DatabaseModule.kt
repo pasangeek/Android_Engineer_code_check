@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import jp.co.yumemi.android.code_check.data.database.AppDatabase
+import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
 import javax.inject.Singleton
 
 @Module
