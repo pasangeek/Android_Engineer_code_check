@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import jp.co.yumemi.android.code_check.databinding.FavouriteLayoutItemBinding
+import jp.co.yumemi.android.code_check.ui.favourite_repo.FavouriteRepositoryViewModel
 
-class FavouriteRepositoryAdapter(private val favoriteRepositories: MutableList<FavoriteRepositoryEntity>) :
+class FavouriteRepositoryAdapter(private val favoriteRepositories: MutableList<FavoriteRepositoryEntity>,private val viewModel: FavouriteRepositoryViewModel) :
     RecyclerView.Adapter<FavouriteRepositoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: FavouriteLayoutItemBinding) :
@@ -21,7 +22,7 @@ class FavouriteRepositoryAdapter(private val favoriteRepositories: MutableList<F
                     // Remove the repository from the list
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-
+                        viewModel.removeFavoriteRepository(repository)
                         notifyItemRemoved(position)
 
 

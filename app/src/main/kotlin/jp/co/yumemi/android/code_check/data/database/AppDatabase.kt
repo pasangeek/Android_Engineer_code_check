@@ -9,7 +9,7 @@ import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepository
  * This class defines the database configuration and provides access to DAOs.
  */
 @Database(entities = [FavoriteRepositoryEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(OwnerTypeConverter::class)

@@ -35,7 +35,7 @@ class FavouriteRepositoryFragment : Fragment() {
         binding= FragmentFavouriteRepositoryBinding.inflate(inflater,container,false)
 
         viewModel = ViewModelProvider(this).get(FavouriteRepositoryViewModel::class.java)
-        favoriteAdapter = FavouriteRepositoryAdapter(mutableListOf())
+        favoriteAdapter = FavouriteRepositoryAdapter(mutableListOf(),viewModel)
         setUpRecyclerView(binding.recyclerView)
         initObservers()
         return binding?.root
