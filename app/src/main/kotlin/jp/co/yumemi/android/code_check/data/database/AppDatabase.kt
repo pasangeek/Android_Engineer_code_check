@@ -11,5 +11,9 @@ import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepository
     version = 1,
     exportSchema = false
 )
+@TypeConverters(OwnerTypeConverter::class)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun favoriteRepositoryDao(): FavoriteRepositoryDao
 
+}
 
