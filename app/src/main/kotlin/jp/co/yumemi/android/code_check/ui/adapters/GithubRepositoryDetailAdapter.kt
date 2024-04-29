@@ -1,13 +1,17 @@
 package jp.co.yumemi.android.code_check.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.LayoutItemBinding
+import jp.co.yumemi.android.code_check.ui.favourite_repo.FavouriteRepositoryViewModel
+
 /**
  * Adapter for displaying GitHub repository details in a RecyclerView.
  *
@@ -15,6 +19,7 @@ import jp.co.yumemi.android.code_check.databinding.LayoutItemBinding
  */
 class GithubRepositoryDetailAdapter(
     private val itemClickListener: OnItemClickListener,
+    private val viewModel: FavouriteRepositoryViewModel
 ) : ListAdapter<GithubRepositoryData, GithubRepositoryDetailAdapter.ViewHolder>(diff_util) {
 
     /**
@@ -51,6 +56,30 @@ class GithubRepositoryDetailAdapter(
                     itemClickListener.itemClick(getItem(position))
                 }
             }
+            binding.heartImageView.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val repository = getItem(position)
+                    val favoriteRepository = FavoriteRepositoryEntity(
+                        name = repository.name,
+                        owner = repository.owner,
+                        language = repository.language,
+                        stargazersCount = repository.stargazersCount,
+                        watchersCount = repository.watchersCount,
+                        forksCount = repository.forksCount,
+                        openIssuesCount = repository.openIssuesCount
+                    )
+                    val isFavorite = viewModel.isFavorite(favoriteRepository)
+                    if (isFavorite) {
+                        viewModel.removeFavoriteRepository(favoriteRepository)
+                        Log.d("GithubRepositoryAdapter", "Repository removed from favorites: $favoriteRepository")
+                    } else {
+                        viewModel.addFavoriteRepository(favoriteRepository)
+                        Log.d("GithubRepositoryAdapter", "Repository added to favorites: $favoriteRepository")
+                    }
+                }
+            }
+
         }
         /**
          * Binds the data to the ViewHolder.
