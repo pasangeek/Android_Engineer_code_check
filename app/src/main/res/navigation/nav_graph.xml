@@ -24,11 +24,11 @@
     <fragment
         android:id="@+id/favouriteRepositoryFragment"
         android:name="jp.co.yumemi.android.code_check.ui.favourite_repo.FavouriteRepositoryFragment"
-        android:label="fragment_favourite_repository"
+        android:label="@string/title_favourite"
         tools:layout="@layout/fragment_favourite_repository" />
     <fragment
         android:id="@+id/settingFragment"
         android:name="jp.co.yumemi.android.code_check.ui.setting.SettingFragment"
-        android:label="fragment_setting"
+        android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />
 </navigation>
