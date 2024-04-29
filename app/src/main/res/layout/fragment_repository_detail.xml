@@ -17,18 +17,19 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/backButton"
-            android:contentDescription="@string/navigate_back"
             android:layout_width="@dimen/backButton_width"
             android:layout_height="@dimen/backButton_height"
             android:layout_marginEnd="@dimen/backButton_marginEnd"
-            android:layout_marginBottom="@dimen/backButton_marginBottom"
+            android:layout_marginBottom="82dp"
             android:clickable="true"
+            android:contentDescription="@string/navigate_back"
+            android:focusable="true"
+            android:paddingBottom="@dimen/_24dp"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:maxImageSize="20dp"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24"
-            android:focusable="true" />
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
 
         <LinearLayout
@@ -77,7 +78,6 @@
                     android:textColor="@color/text_color_light"
                     android:layout_marginTop="@dimen/name_view_margin_top"
                     android:text="@{detailsVM.gitHubRepositoryDetails.name}" />
-
 
                 <TextView
                     android:id="@+id/languageView"

@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.databinding.ActivityTopBinding
 
+
 /**
  * Top-level activity in the application.
  * Annotated with [@AndroidEntryPoint] for Hilt dependency injection.
@@ -40,5 +41,7 @@ class TopActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
     }
-    }
+
+}

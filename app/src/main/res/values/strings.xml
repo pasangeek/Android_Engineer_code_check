@@ -28,4 +28,5 @@
     <string name="title_home">Home</string>
     <string name="title_favourite">Favourite</string>
     <string name="title_setting">Account</string>
+    <string name="title_repository">Repository</string>
 </resources>
