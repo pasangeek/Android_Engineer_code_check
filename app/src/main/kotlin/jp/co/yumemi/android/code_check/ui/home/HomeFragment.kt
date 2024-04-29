@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
 import jp.co.yumemi.android.code_check.ui.adapters.GithubRepositoryDetailAdapter
 import jp.co.yumemi.android.code_check.ui.error_dialog.ErrorDialog
+import jp.co.yumemi.android.code_check.ui.favourite_repo.FavouriteRepositoryViewModel
 
 /**
  * Fragment responsible for displaying and managing the home screen UI.
@@ -86,7 +88,9 @@ class HomeFragment : Fragment() {
      * Initialize RecyclerView adapter.
      */
     private fun initializeRecycleViewAdapter() {
+
         // Initializing the RecyclerView adapter
+
         Log.d("HomeFragment", "Initializing RecyclerView adapter")
         this.githubRepositoryDetailAdapter = GithubRepositoryDetailAdapter(object :
             GithubRepositoryDetailAdapter.OnItemClickListener {
@@ -94,7 +98,8 @@ class HomeFragment : Fragment() {
                 gotoRepositoryFragment(repo)
                 logMessage("GitHub repository list updated")
             }
-        })
+        },
+        )
         // Set the RecyclerView adapter
         binding?.recyclerView?.adapter = githubRepositoryDetailAdapter
 
