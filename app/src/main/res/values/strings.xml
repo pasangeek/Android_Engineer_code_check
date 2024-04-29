@@ -25,4 +25,8 @@
     <string name="close">Close</string>
     <string name="an_error_occurred">An error occurred.</string>
     <string name="repository_name">Repository Name</string>
+    <string name="title_home">Home</string>
+    <string name="title_favourite">Favourite</string>
+    <string name="title_setting">Account</string>
+    <string name="title_repository">Repository</string>
 </resources>
