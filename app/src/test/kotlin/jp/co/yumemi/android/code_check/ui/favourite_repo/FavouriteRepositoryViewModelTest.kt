@@ -40,4 +40,41 @@ class FavouriteRepositoryViewModelTest {
         // Verify that the insert operation was successful
         Mockito.verify(favoriteRepositoryDao).insert(favoriteRepository)
     }
+    @Test
+    fun testInsertHardcodedData() = runBlocking {
+        // Create a sample list of FavoriteRepository objects with hardcoded data
+        val hardcodedData = listOf(
+            FavoriteRepositoryEntity(
+                id = 1,
+                name = "Test Repository 1",
+                owner = Owner("owner_avatar_url_1"),
+                language = "Kotlin",
+                stargazersCount = "100",
+                watchersCount = "50",
+                forksCount = "20",
+                openIssuesCount = "10"
+            ),
+            FavoriteRepositoryEntity(
+                id = 2,
+                name = "Test Repository 2",
+                owner = Owner("owner_avatar_url_2"),
+                language = "Java",
+                stargazersCount = "200",
+                watchersCount = "80",
+                forksCount = "30",
+                openIssuesCount = "15"
+            )
+            // Add more hardcoded data as needed
+        )
+
+        // Insert the hardcoded data into the database
+        hardcodedData.forEach { repository ->
+            favoriteRepositoryDao.insert(repository)
+        }
+
+        // Verify that the insert operation was successful for each item
+        hardcodedData.forEach { repository ->
+            Mockito.verify(favoriteRepositoryDao).insert(repository)
+        }
+    }
 }
