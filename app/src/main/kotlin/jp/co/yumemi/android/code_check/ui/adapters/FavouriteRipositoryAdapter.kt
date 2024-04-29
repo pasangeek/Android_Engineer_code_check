@@ -1,6 +1,7 @@
 package jp.co.yumemi.android.code_check.ui.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
@@ -16,14 +17,24 @@ class FavouriteRepositoryAdapter(private val favoriteRepositories: MutableList<F
             with(binding) {
                 // Bind repository data to UI elements
                 repositoryNameView.text = repository.name
-                // Bind other data fields as needed
+                heartImageView.setOnClickListener {
+                    // Remove the repository from the list
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+
+                        notifyItemRemoved(position)
+
+
+                    }
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // Inflate the item layout and create a ViewHolder
-        val binding = FavouriteLayoutItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            FavouriteLayoutItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -44,4 +55,5 @@ class FavouriteRepositoryAdapter(private val favoriteRepositories: MutableList<F
         favoriteRepositories.addAll(newList)
         notifyDataSetChanged() // Notify the adapter that the dataset has changed
     }
+
 }

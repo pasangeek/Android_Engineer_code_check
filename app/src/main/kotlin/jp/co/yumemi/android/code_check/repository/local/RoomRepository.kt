@@ -39,4 +39,10 @@ private val dao: FavoriteRepositoryDao){
     suspend fun deleteFavoriteRepository(repository: FavoriteRepositoryEntity) {
         dao.delete(repository)
     }
+
+    // Suspend function to check if a repository is a favorite
+    suspend fun isFavorite(repositoryId: Long): Boolean {
+        // Call the DAO method to check if the repository exists in favorites
+        return dao.isFavorite(repositoryId) != null
+    }
 }

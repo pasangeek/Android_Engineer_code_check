@@ -3,6 +3,7 @@ package jp.co.yumemi.android.code_check.ui.adapters
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepository
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.LayoutItemBinding
 import jp.co.yumemi.android.code_check.ui.favourite_repo.FavouriteRepositoryViewModel
+import kotlinx.coroutines.launch
 
 /**
  * Adapter for displaying GitHub repository details in a RecyclerView.
@@ -69,13 +71,19 @@ class GithubRepositoryDetailAdapter(
                         forksCount = repository.forksCount,
                         openIssuesCount = repository.openIssuesCount
                     )
-                    val isFavorite = viewModel.isFavorite(favoriteRepository)
-                    if (isFavorite) {
-                        viewModel.removeFavoriteRepository(favoriteRepository)
-                        Log.d("GithubRepositoryAdapter", "Repository removed from favorites: $favoriteRepository")
-                    } else {
-                        viewModel.addFavoriteRepository(favoriteRepository)
-                        Log.d("GithubRepositoryAdapter", "Repository added to favorites: $favoriteRepository")
+
+                    // Use viewModelScope to launch a coroutine
+                    viewModel.viewModelScope.launch {
+                        Log.d("FavouriteRepositoryViewModel", "Checking if repository is favorite")
+                        val isFavorite = viewModel.checkIfFavorite(favoriteRepository.id) // Ensure checkIfFavorite returns Boolean
+                        Log.d("FavouriteRepositoryViewModel", "Is repository favorite: $isFavorite")
+                        if (isFavorite) {
+                            viewModel.removeFavoriteRepository(favoriteRepository)
+                            Log.d("GithubRepositoryAdapter", "Repository removed from favorites: $favoriteRepository")
+                        } else {
+                            viewModel.addFavoriteRepository(favoriteRepository)
+                            Log.d("GithubRepositoryAdapter", "Repository added to favorites: $favoriteRepository")
+                        }
                     }
                 }
             }
@@ -90,9 +98,12 @@ class GithubRepositoryDetailAdapter(
             with(binding) {
                 ivOwner.load(repo.owner?.avatarUrl)
                 repositoryNameView.text = repo.name
+
+
             }
 
         }
+
     }
 
     companion object {

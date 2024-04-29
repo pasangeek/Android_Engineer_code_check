@@ -37,4 +37,7 @@ interface FavoriteRepositoryDao {
      */
     @Delete
     suspend fun delete(repository: FavoriteRepositoryEntity)
+
+    @Query("SELECT * FROM favorite_repositories WHERE id = :repositoryId")
+    suspend fun isFavorite(repositoryId: Long): FavoriteRepositoryEntity?
 }

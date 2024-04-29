@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jp.co.yumemi.android.code_check.data.database.AppDatabase
 import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import jp.co.yumemi.android.code_check.repository.local.RoomRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 /**
  * ViewModel responsible for managing favorite repositories.
  * This ViewModel interacts with the database through [RoomRepository] and [FavoriteRepositoryDao]
@@ -49,9 +49,10 @@ class FavouriteRepositoryViewModel  @Inject constructor(
      * @param repository The repository to check.
      * @return True if the repository is marked as favorite, false otherwise.
      */
-    fun isFavorite(repository: FavoriteRepositoryEntity): Boolean {
-        return favoriteRepositoryList.any { it.id == repository.id }
+    suspend fun checkIfFavorite(repositoryId: Long): Boolean {
+        return repository.isFavorite(repositoryId)
     }
+
     /**
      * Fetches all favorite repositories from the database.
      */
