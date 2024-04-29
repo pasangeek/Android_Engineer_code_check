@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import jp.co.yumemi.android.code_check.data.model.Owner
 
 @Entity(tableName = "favorite_repositories")
-class FavoriteRepository (
+class FavoriteRepositoryEntity (
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     val name: String?,
     val owner: Owner?,

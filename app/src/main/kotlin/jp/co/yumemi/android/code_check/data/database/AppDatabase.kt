@@ -3,11 +3,11 @@ package jp.co.yumemi.android.code_check.data.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepository
+import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 
 
 
-@Database(entities = [FavoriteRepository::class],
+@Database(entities = [FavoriteRepositoryEntity::class],
     version = 1,
     exportSchema = false
 )

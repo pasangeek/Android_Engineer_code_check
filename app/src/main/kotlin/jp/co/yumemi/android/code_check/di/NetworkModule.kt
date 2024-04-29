@@ -9,7 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import jp.co.yumemi.android.code_check.common.ConstantNetworkService.BASE_URL
 import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
-import jp.co.yumemi.android.code_check.repository.GithubRepository
+import jp.co.yumemi.android.code_check.repository.remote.GithubRepository
 import jp.co.yumemi.android.code_check.sources.GithubRepositoryApiService
 import okhttp3.OkHttpClient
 import retrofit2.Converter

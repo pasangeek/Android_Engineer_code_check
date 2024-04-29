@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.repository
+package jp.co.yumemi.android.code_check.repository.remote
 
 import android.util.Log
 import jp.co.yumemi.android.code_check.data.model.GithubServerResponse
