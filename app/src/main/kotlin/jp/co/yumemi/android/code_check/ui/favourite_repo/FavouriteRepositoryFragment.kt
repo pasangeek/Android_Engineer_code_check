@@ -47,10 +47,10 @@ class FavouriteRepositoryFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
     private fun initObservers() {
-        viewModel.favoriteRepositories.observe(viewLifecycleOwner) { favoriteRepositories ->
+        viewModel.readAllData.observe(viewLifecycleOwner) { favoriteRepositories ->
             favoriteRepositories?.let {
                 favoriteAdapter.updateList(it.toMutableList())
-                Log.d("favouriteFragment", "Favorite repository list updated")
+                Log.d("FavouriteFragment", "Favorite repository list updated")
             }
         }
     }

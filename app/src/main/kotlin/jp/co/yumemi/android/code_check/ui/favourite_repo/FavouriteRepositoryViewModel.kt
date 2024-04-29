@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jp.co.yumemi.android.code_check.data.database.AppDatabase
 import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import jp.co.yumemi.android.code_check.repository.local.RoomRepository
@@ -29,11 +30,18 @@ class FavouriteRepositoryViewModel  @Inject constructor(
     val favoriteRepositories: LiveData<List<FavoriteRepositoryEntity>> = _favoriteRepositories
     // Maintain a list of favorite repositories
     private val favoriteRepositoryList = mutableListOf<FavoriteRepositoryEntity>()
+
+    var readAllData: LiveData<List<FavoriteRepositoryEntity>> = repository.readAllData
+
     init {
         viewModelScope.launch {
+
             _favoriteRepositories.value = repository.getAllFavoriteRepositories()
             favoriteRepositoryList.addAll(_favoriteRepositories.value ?: emptyList())
+
+            readAllData = repository.readAllData
         }
+
     }
     /**
      * Checks if a given repository is marked as favorite.

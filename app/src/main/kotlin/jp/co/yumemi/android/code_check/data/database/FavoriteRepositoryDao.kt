@@ -1,5 +1,6 @@
 package jp.co.yumemi.android.code_check.data.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -25,6 +26,10 @@ interface FavoriteRepositoryDao {
      */
     @Query("SELECT * FROM favorite_repositories")
     suspend fun getAll(): List<FavoriteRepositoryEntity>
+
+
+    @Query("SELECT * FROM favorite_repositories ORDER BY id ASC")
+  fun readAllData(): LiveData<List<FavoriteRepositoryEntity>>
     /**
      * Deletes a favorite repository from the database.
      *
