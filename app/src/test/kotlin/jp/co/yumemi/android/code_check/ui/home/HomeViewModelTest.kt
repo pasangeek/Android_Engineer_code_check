@@ -7,7 +7,7 @@ import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.data.model.GithubServerResponse
 import jp.co.yumemi.android.code_check.data.model.Owner
 import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
-import jp.co.yumemi.android.code_check.repository.GithubRepository
+import jp.co.yumemi.android.code_check.repository.remote.GithubRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
