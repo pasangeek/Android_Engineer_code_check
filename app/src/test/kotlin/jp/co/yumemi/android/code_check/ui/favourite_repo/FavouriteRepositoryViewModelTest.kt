@@ -17,9 +17,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class FavouriteRepositoryViewModelTest {
-
+    // Mocking the FavoriteRepositoryDao
     @Mock
     private lateinit var favoriteRepositoryDao: FavoriteRepositoryDao
+    /**
+     * Test case to verify the insertion of a single FavoriteRepositoryEntity into the database.
+     */
     @Test
     fun testInsertFavoriteRepository() = runBlocking {
         // Create a sample FavoriteRepository object
@@ -40,6 +43,9 @@ class FavouriteRepositoryViewModelTest {
         // Verify that the insert operation was successful
         Mockito.verify(favoriteRepositoryDao).insert(favoriteRepository)
     }
+    /**
+     * Test case to verify the insertion of multiple hardcoded FavoriteRepositoryEntity objects into the database.
+     */
     @Test
     fun testInsertHardcodedData() = runBlocking {
         // Create a sample list of FavoriteRepository objects with hardcoded data
