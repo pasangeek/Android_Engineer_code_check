@@ -2,6 +2,7 @@ package jp.co.yumemi.android.code_check.ui.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewModelScope
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
@@ -23,7 +25,8 @@ import kotlinx.coroutines.launch
  */
 class GithubRepositoryDetailAdapter(
     private val itemClickListener: OnItemClickListener,
-    private val viewModel: FavouriteRepositoryViewModel
+    private val viewModel: FavouriteRepositoryViewModel,
+    private val rootView: View
 ) : ListAdapter<GithubRepositoryData, GithubRepositoryDetailAdapter.ViewHolder>(diff_util) {
 
     // Interface definition for the click listener of items in the adapter.
@@ -47,6 +50,7 @@ class GithubRepositoryDetailAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         init {
+
             // Set a click listener for the item view
             itemView.setOnClickListener {
                 val position = bindingAdapterPosition
@@ -72,14 +76,19 @@ class GithubRepositoryDetailAdapter(
 
                     // Toggle favorite status
                     viewModel.viewModelScope.launch {
-                        val isFavorite = repository.name?.let { it1 -> viewModel.checkIfFavorite(it1) }
+                        Log.d("ViewHolder", "Checking if repository is favorite")
+                        val isFavorite =
+                            repository.name?.let { it1 -> viewModel.checkIfFavorite(it1) }
+                        Log.d("ViewHolder", "Is repository favorite: $isFavorite")
                         if (isFavorite == true) {
-                            viewModel.removeFavoriteRepository(favoriteRepository)
+                                showSnackbar("Repository is already in favourites")
                         } else {
                             viewModel.addFavoriteRepository(favoriteRepository)
+                            showSnackbar("Repository added to favorites")
+                           // Notify the adapter that the dataset has changed
+                            notifyItemChanged(bindingAdapterPosition)
                         }
-                        // Notify the adapter that the dataset has changed
-                        notifyItemChanged(bindingAdapterPosition)
+
                     }
                 }
             }
@@ -127,6 +136,15 @@ class GithubRepositoryDetailAdapter(
                 }
             }
         }
+    }
+
+    /**
+     * Shows a Snackbar notification with the given message.
+     *
+     * @param message The message to display in the Snackbar.
+     */
+    private fun showSnackbar(message: String) {
+        Snackbar.make(rootView, message, Snackbar.LENGTH_SHORT).show()
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package jp.co.yumemi.android.code_check.data.database.entities
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import jp.co.yumemi.android.code_check.data.model.Owner
 /**

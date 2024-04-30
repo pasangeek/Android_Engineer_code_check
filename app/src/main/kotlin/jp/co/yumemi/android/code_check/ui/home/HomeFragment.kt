@@ -88,8 +88,9 @@ class HomeFragment : Fragment() {
      */
     private fun initializeRecycleViewAdapter() {
         val viewModel: FavouriteRepositoryViewModel by viewModels()
-        // Create a FavoriteRepositoryEntity instance (you can pass default values or null if needed)
-
+        // Get the root view of the fragment
+// Get the root view of the fragment
+        val rootView = binding?.root ?: return
 
         // Initializing the RecyclerView adapter
 
@@ -101,7 +102,7 @@ class HomeFragment : Fragment() {
                     gotoRepositoryFragment(repo)
                     logMessage("GitHub repository list updated")
                 }
-            }, viewModel
+            }, viewModel,rootView
         )
         // Set the RecyclerView adapter
         binding?.recyclerView?.adapter = githubRepositoryDetailAdapter

@@ -95,8 +95,17 @@ class FavouriteRepositoryViewModel  @Inject constructor(
     fun removeFavoriteRepository(favouriteRepository: FavoriteRepositoryEntity) {
         viewModelScope.launch {
             try {
+                // Log before deleting the favorite repository
+                Log.d("FavouriteRepoViewModel", "Deleting favorite repository: $favouriteRepository")
                 repository.deleteFavoriteRepository(favouriteRepository)
-                getFavoriteRepositories() // Refresh the list after deletion
+                // Log after deleting the favorite repository
+                Log.d("FavouriteRepoViewModel", "Favorite repository deleted: $favouriteRepository")
+
+                // Log before getting favorite repositories
+                Log.d("FavouriteRepoViewModel", "Refreshing favorite repositories list...")
+                getFavoriteRepositories()
+                // Log after getting favorite repositories
+                Log.d("FavouriteRepoViewModel", "Favorite repositories list refreshed.")
             } catch (e: Exception) {
                 // Handle exceptions
                 Log.e("FavouriteRepoViewModel", "Error removing favorite repository", e)
