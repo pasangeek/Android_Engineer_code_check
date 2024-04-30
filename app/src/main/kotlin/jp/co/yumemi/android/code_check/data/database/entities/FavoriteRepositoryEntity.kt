@@ -20,11 +20,11 @@ import jp.co.yumemi.android.code_check.data.model.Owner
 class FavoriteRepositoryEntity (
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     val name: String?,
-    val owner: Owner?= null,
-    val language: String?= null,
-    val stargazersCount: String?= null,
-    val watchersCount: String?= null,
-    val forksCount: String?= null,
-    val openIssuesCount: String?= null,
+    val owner: Owner?,
+    val language: String?,
+    val stargazersCount: String?,
+    val watchersCount: String?,
+    val forksCount: String?,
+    val openIssuesCount: String?,
     var isFavorite: Boolean = false
 )

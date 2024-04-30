@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
     private fun initializeRecycleViewAdapter() {
         val viewModel: FavouriteRepositoryViewModel by viewModels()
         // Create a FavoriteRepositoryEntity instance (you can pass default values or null if needed)
-        val favoriteRepository = FavoriteRepositoryEntity(name = "sample")
+
 
         // Initializing the RecyclerView adapter
 
@@ -102,7 +102,7 @@ class HomeFragment : Fragment() {
                 gotoRepositoryFragment(repo)
                 logMessage("GitHub repository list updated")
             }
-        },viewModel, favoriteRepository
+        },viewModel
         )
         // Set the RecyclerView adapter
         binding?.recyclerView?.adapter = githubRepositoryDetailAdapter

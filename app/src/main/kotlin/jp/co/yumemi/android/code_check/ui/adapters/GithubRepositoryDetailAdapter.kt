@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 class GithubRepositoryDetailAdapter(
     private val itemClickListener: OnItemClickListener,
     private val viewModel: FavouriteRepositoryViewModel,
-    private val favoriteRepository: FavoriteRepositoryEntity
+
 ) : ListAdapter<GithubRepositoryData, GithubRepositoryDetailAdapter.ViewHolder>(diff_util) {
 
     /**
@@ -63,7 +63,15 @@ class GithubRepositoryDetailAdapter(
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val repository = getItem(position)
-
+                    val favoriteRepository = FavoriteRepositoryEntity(
+                        name = repository.name,
+                        owner = repository.owner,
+                        language = repository.language,
+                        stargazersCount = repository.stargazersCount,
+                        watchersCount = repository.watchersCount,
+                        forksCount = repository.forksCount,
+                        openIssuesCount = repository.openIssuesCount
+                    )
 
                     // Use viewModelScope to launch a coroutine
                     viewModel.viewModelScope.launch {
