@@ -23,13 +23,10 @@ import kotlinx.coroutines.launch
  */
 class GithubRepositoryDetailAdapter(
     private val itemClickListener: OnItemClickListener,
-    private val viewModel: FavouriteRepositoryViewModel,
+    private val viewModel: FavouriteRepositoryViewModel
+) : ListAdapter<GithubRepositoryData, GithubRepositoryDetailAdapter.ViewHolder>(diff_util) {
 
-    ) : ListAdapter<GithubRepositoryData, GithubRepositoryDetailAdapter.ViewHolder>(diff_util) {
-
-    /**
-     * Interface definition for the click listener of items in the adapter.
-     */
+    // Interface definition for the click listener of items in the adapter.
     interface OnItemClickListener {
         fun itemClick(repo: GithubRepositoryData)
     }
@@ -44,16 +41,11 @@ class GithubRepositoryDetailAdapter(
         // Bind data to the ViewHolder
         val gitHubRepositoryItem = getItem(position)
         holder.bind(gitHubRepositoryItem)
-
     }
 
-    /**
-     * ViewHolder class for the adapter. Represents an item view in the RecyclerView.
-     *
-     * @param binding The ViewBinding object for the item layout.
-     */
     inner class ViewHolder(private val binding: LayoutItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         init {
             // Set a click listener for the item view
             itemView.setOnClickListener {
@@ -62,6 +54,8 @@ class GithubRepositoryDetailAdapter(
                     itemClickListener.itemClick(getItem(position))
                 }
             }
+
+            // Set click listener for the heart image view
             binding.heartImageView.setOnClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -76,29 +70,19 @@ class GithubRepositoryDetailAdapter(
                         openIssuesCount = repository.openIssuesCount
                     )
 
-                    // Use viewModelScope to launch a coroutine
+                    // Toggle favorite status
                     viewModel.viewModelScope.launch {
-                        Log.d("FavouriteRepositoryViewModel", "Checking if repository is favorite")
-                        val isFavorite =
-                            favoriteRepository.name?.let { it1 -> viewModel.checkIfFavorite(it1) } // Ensure checkIfFavorite returns Boolean
-                        Log.d("FavouriteRepositoryViewModel", "Is repository favorite: $isFavorite")
+                        val isFavorite = repository.name?.let { it1 -> viewModel.checkIfFavorite(it1) }
                         if (isFavorite == true) {
                             viewModel.removeFavoriteRepository(favoriteRepository)
-                            Log.d(
-                                "GithubRepositoryAdapter",
-                                "Repository removed from favorites: $favoriteRepository"
-                            )
                         } else {
                             viewModel.addFavoriteRepository(favoriteRepository)
-                            Log.d(
-                                "GithubRepositoryAdapter",
-                                "Repository added to favorites: $favoriteRepository"
-                            )
                         }
+                        // Notify the adapter that the dataset has changed
+                        notifyItemChanged(bindingAdapterPosition)
                     }
                 }
             }
-
         }
 
         /**
@@ -110,27 +94,36 @@ class GithubRepositoryDetailAdapter(
             with(binding) {
                 ivOwner.load(repo.owner?.avatarUrl)
                 repositoryNameView.text = repo.name
-                // Call checkIfFavorite function within a coroutine
-                viewModel.viewModelScope.launch {
-                    val isFavorite = repo.name?.let { viewModel.checkIfFavorite(it) }
-                    // Update heart image view color based on the result
-                    if (isFavorite == true) {
-                        // Set heart image view color to favorite color
-                        heartImageView.setColorFilter(
-                            ContextCompat.getColor(
-                                itemView.context,
-                                R.color.favorite_color
-                            )
+
+                // Update heart icon color based on favorite status
+                updateHeartIconColor(repo)
+            }
+        }
+
+        /**
+         * Updates the color of the heart icon based on the favorite status.
+         *
+         * @param repo The GitHub repository data.
+         */
+        private fun updateHeartIconColor(repo: GithubRepositoryData) {
+            viewModel.viewModelScope.launch {
+                val isFavorite = repo.name?.let { viewModel.checkIfFavorite(it) }
+                if (isFavorite == true) {
+                    // Set heart image view color to favorite color
+                    binding.heartImageView.setColorFilter(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.favorite_color
                         )
-                    } else {
-                        // Set heart image view color to non-favorite color
-                        heartImageView.setColorFilter(
-                            ContextCompat.getColor(
-                                itemView.context,
-                                R.color.non_favorite_color
-                            )
+                    )
+                } else {
+                    // Set heart image view color to non-favorite color
+                    binding.heartImageView.setColorFilter(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.non_favorite_color
                         )
-                    }
+                    )
                 }
             }
         }
