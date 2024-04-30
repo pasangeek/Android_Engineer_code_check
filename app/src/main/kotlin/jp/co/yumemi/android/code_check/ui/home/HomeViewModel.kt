@@ -1,6 +1,5 @@
 package jp.co.yumemi.android.code_check.ui.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -39,8 +38,10 @@ class HomeViewModel @Inject constructor(
 
     // LiveData to observe API response state
     val responseGithubRepositoryList = MutableLiveData<ResultState>()
+
     // LiveData to hold the list of GitHub repositories
     val gitHubRepositoryList = MutableLiveData<List<GithubRepositoryData>>()
+
     // LiveData to observe error state
     var errorState = MutableLiveData<ErrorState?>()
     val errorLiveData: MutableLiveData<ErrorState?> get() = errorState
@@ -81,12 +82,4 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    /**
-     * Helper function for logging messages with a specified tag.
-     *
-     * @param message The message to be logged.
-     */
-    private fun logMessage(message: String) {
-        Log.d("SearchViewModel", message)
-    }
 }

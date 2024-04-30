@@ -1,5 +1,6 @@
 package jp.co.yumemi.android.code_check.ui.favourite_repo
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,13 +13,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * ViewModel responsible for managing favorite repositories.
- * This ViewModel interacts with the database through [RoomRepository] and [FavoriteRepositoryDao]
- * to perform CRUD operations on favorite repositories.
- * It provides LiveData for observing the list of favorite repositories.
+ * ViewModel for managing favorite repositories.
  *
- * @property repository The [RoomRepository] instance for interacting with the database.
- * @property favoriteRepositoryDao The [FavoriteRepositoryDao] instance for database operations specific to favorite repositories.
+ * @property repository The RoomRepository instance for database operations.
+ * @property favoriteRepositoryDao The FavoriteRepositoryDao instance for database operations.
  */
 @HiltViewModel
 class FavouriteRepositoryViewModel  @Inject constructor(
@@ -26,22 +24,22 @@ class FavouriteRepositoryViewModel  @Inject constructor(
     private val favoriteRepositoryDao: FavoriteRepositoryDao
 ): ViewModel() {
 
+    // LiveData for holding favorite repositories
     private val _favoriteRepositories = MutableLiveData<List<FavoriteRepositoryEntity>>()
-    val favoriteRepositories: LiveData<List<FavoriteRepositoryEntity>> = _favoriteRepositories
-    // Maintain a list of favorite repositories
-    private val favoriteRepositoryList = mutableListOf<FavoriteRepositoryEntity>()
-
     var readAllData: LiveData<List<FavoriteRepositoryEntity>> = repository.readAllData
 
+    /**
+     * Initializes the ViewModel by fetching favorite repositories from the database.
+     */
     init {
         viewModelScope.launch {
-
-            _favoriteRepositories.value = repository.getAllFavoriteRepositories()
-            favoriteRepositoryList.addAll(_favoriteRepositories.value ?: emptyList())
-
-            readAllData = repository.readAllData
+            try {
+                _favoriteRepositories.value = repository.getAllFavoriteRepositories()
+            } catch (e: Exception) {
+                // Handle exceptions
+                Log.e("FavouriteRepoViewModel", "Error fetching favorite repositories", e)
+            }
         }
-
     }
     /**
      * Checks if a given repository is marked as favorite.
@@ -50,7 +48,13 @@ class FavouriteRepositoryViewModel  @Inject constructor(
      * @return True if the repository is marked as favorite, false otherwise.
      */
     suspend fun checkIfFavorite(repositoryName: String): Boolean {
-        return repository.isFavorite(repositoryName)
+        return try {
+            repository.isFavorite(repositoryName)
+        } catch (e: Exception) {
+            // Handle exceptions
+            Log.e("FavouriteRepoViewModel", "Error checking if repository is favorite", e)
+            false
+        }
     }
 
     /**
@@ -58,7 +62,12 @@ class FavouriteRepositoryViewModel  @Inject constructor(
      */
     fun getFavoriteRepositories() {
         viewModelScope.launch {
-            _favoriteRepositories.value = repository.getAllFavoriteRepositories()
+            try {
+                _favoriteRepositories.value = repository.getAllFavoriteRepositories()
+            } catch (e: Exception) {
+                // Handle exceptions
+                Log.e("FavouriteRepoViewModel", "Error fetching favorite repositories", e)
+            }
         }
     }
 
@@ -69,8 +78,13 @@ class FavouriteRepositoryViewModel  @Inject constructor(
      */
     fun addFavoriteRepository(favouriteRepository: FavoriteRepositoryEntity) {
         viewModelScope.launch {
-            repository.insert(favouriteRepository)
-            getFavoriteRepositories() // Refresh the list after insertion
+            try {
+                repository.insert(favouriteRepository)
+                getFavoriteRepositories() // Refresh the list after insertion
+            } catch (e: Exception) {
+                // Handle exceptions
+                Log.e("FavouriteRepoViewModel", "Error adding favorite repository", e)
+            }
         }
     }
     /**
@@ -80,8 +94,13 @@ class FavouriteRepositoryViewModel  @Inject constructor(
      */
     fun removeFavoriteRepository(favouriteRepository: FavoriteRepositoryEntity) {
         viewModelScope.launch {
-            repository.deleteFavoriteRepository(favouriteRepository)
-            getFavoriteRepositories() // Refresh the list after deletion
+            try {
+                repository.deleteFavoriteRepository(favouriteRepository)
+                getFavoriteRepositories() // Refresh the list after deletion
+            } catch (e: Exception) {
+                // Handle exceptions
+                Log.e("FavouriteRepoViewModel", "Error removing favorite repository", e)
+            }
         }
     }
 }

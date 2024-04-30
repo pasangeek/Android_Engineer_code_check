@@ -23,7 +23,7 @@ class GithubRepositoryDetailAdapter(
     private val itemClickListener: OnItemClickListener,
     private val viewModel: FavouriteRepositoryViewModel,
 
-) : ListAdapter<GithubRepositoryData, GithubRepositoryDetailAdapter.ViewHolder>(diff_util) {
+    ) : ListAdapter<GithubRepositoryData, GithubRepositoryDetailAdapter.ViewHolder>(diff_util) {
 
     /**
      * Interface definition for the click listener of items in the adapter.
@@ -44,6 +44,7 @@ class GithubRepositoryDetailAdapter(
         holder.bind(gitHubRepositoryItem)
 
     }
+
     /**
      * ViewHolder class for the adapter. Represents an item view in the RecyclerView.
      *
@@ -81,16 +82,23 @@ class GithubRepositoryDetailAdapter(
                         Log.d("FavouriteRepositoryViewModel", "Is repository favorite: $isFavorite")
                         if (isFavorite == true) {
                             viewModel.removeFavoriteRepository(favoriteRepository)
-                            Log.d("GithubRepositoryAdapter", "Repository removed from favorites: $favoriteRepository")
+                            Log.d(
+                                "GithubRepositoryAdapter",
+                                "Repository removed from favorites: $favoriteRepository"
+                            )
                         } else {
                             viewModel.addFavoriteRepository(favoriteRepository)
-                            Log.d("GithubRepositoryAdapter", "Repository added to favorites: $favoriteRepository")
+                            Log.d(
+                                "GithubRepositoryAdapter",
+                                "Repository added to favorites: $favoriteRepository"
+                            )
                         }
                     }
                 }
             }
 
         }
+
         /**
          * Binds the data to the ViewHolder.
          *
@@ -101,11 +109,8 @@ class GithubRepositoryDetailAdapter(
                 ivOwner.load(repo.owner?.avatarUrl)
                 repositoryNameView.text = repo.name
 
-
             }
-
         }
-
     }
 
     companion object {
