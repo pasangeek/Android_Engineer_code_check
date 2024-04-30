@@ -3,11 +3,13 @@ package jp.co.yumemi.android.code_check.ui.adapters
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.LayoutItemBinding
@@ -108,7 +110,28 @@ class GithubRepositoryDetailAdapter(
             with(binding) {
                 ivOwner.load(repo.owner?.avatarUrl)
                 repositoryNameView.text = repo.name
-
+                // Call checkIfFavorite function within a coroutine
+                viewModel.viewModelScope.launch {
+                    val isFavorite = repo.name?.let { viewModel.checkIfFavorite(it) }
+                    // Update heart image view color based on the result
+                    if (isFavorite == true) {
+                        // Set heart image view color to favorite color
+                        heartImageView.setColorFilter(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.favorite_color
+                            )
+                        )
+                    } else {
+                        // Set heart image view color to non-favorite color
+                        heartImageView.setColorFilter(
+                            ContextCompat.getColor(
+                                itemView.context,
+                                R.color.non_favorite_color
+                            )
+                        )
+                    }
+                }
             }
         }
     }
