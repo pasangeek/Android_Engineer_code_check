@@ -39,9 +39,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="36dp"
-                app:srcCompat="@drawable/ic_fav_unfill"
-                app:tint="@color/git_green" />
+                android:layout_marginBottom="12dp"
+                android:layout_marginEnd="@dimen/_16dp"
+                app:srcCompat="@drawable/ic_fav_fill"
+                app:tint="@color/red" />
         </LinearLayout>
 
         <View
