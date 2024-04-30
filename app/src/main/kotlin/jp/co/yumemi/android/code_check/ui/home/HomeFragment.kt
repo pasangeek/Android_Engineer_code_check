@@ -17,6 +17,7 @@ import jp.co.yumemi.android.code_check.common.ErrorState
 import jp.co.yumemi.android.code_check.common.ResultState
 import jp.co.yumemi.android.code_check.common.gone
 import jp.co.yumemi.android.code_check.common.show
+import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
 import jp.co.yumemi.android.code_check.ui.adapters.GithubRepositoryDetailAdapter
@@ -89,6 +90,9 @@ class HomeFragment : Fragment() {
      */
     private fun initializeRecycleViewAdapter() {
         val viewModel: FavouriteRepositoryViewModel by viewModels()
+        // Create a FavoriteRepositoryEntity instance (you can pass default values or null if needed)
+        val favoriteRepository = FavoriteRepositoryEntity(name = "sample")
+
         // Initializing the RecyclerView adapter
 
         Log.d("HomeFragment", "Initializing RecyclerView adapter")
@@ -98,7 +102,7 @@ class HomeFragment : Fragment() {
                 gotoRepositoryFragment(repo)
                 logMessage("GitHub repository list updated")
             }
-        },viewModel
+        },viewModel, favoriteRepository
         )
         // Set the RecyclerView adapter
         binding?.recyclerView?.adapter = githubRepositoryDetailAdapter
