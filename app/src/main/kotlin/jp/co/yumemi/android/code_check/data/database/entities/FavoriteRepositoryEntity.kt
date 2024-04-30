@@ -1,6 +1,7 @@
 package jp.co.yumemi.android.code_check.data.database.entities
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import jp.co.yumemi.android.code_check.data.model.Owner
 /**
@@ -18,7 +19,7 @@ import jp.co.yumemi.android.code_check.data.model.Owner
  */
 @Entity(tableName = "favorite_repositories")
 class FavoriteRepositoryEntity (
-    @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     val name: String?,
     val owner: Owner?,
     val language: String?,

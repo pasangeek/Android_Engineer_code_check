@@ -18,7 +18,10 @@
     <color name="dark_text">#FFFFFF</color>
     <color name="fab_bg">#999999</color>
     <color name="git_green">#6CFF54</color>
+    <color name="red">#FF0101</color>
     <color name="git_black">#1C1C1C</color>
+    <color name="favorite_color">#FF0000</color>
+    <color name="non_favorite_color">#655F5F</color>
     <color name="card_bg">#E6E6E6</color>
     <color name="text_color">#1C1C1C</color>
     <color name="text_color_light">#FFFFFF</color>

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
@@ -25,7 +25,7 @@ class RepositoryDetailFragment : Fragment() {
     private var binding: FragmentRepositoryDetailBinding? = null // Change to nullable
 
     // ViewModel for the fragment
-    private lateinit var viewModel: RepositoryDetailViewModel
+    private val viewModel: RepositoryDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,8 +40,6 @@ class RepositoryDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Initialize ViewModel
-        viewModel = ViewModelProvider(this)[RepositoryDetailViewModel::class.java]
         // Set up data binding
         binding?.apply {
             detailsVM = viewModel

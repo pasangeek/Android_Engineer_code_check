@@ -1,6 +1,5 @@
 package jp.co.yumemi.android.code_check.ui.repository_detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

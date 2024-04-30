@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +20,7 @@ import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
 import jp.co.yumemi.android.code_check.ui.adapters.GithubRepositoryDetailAdapter
 import jp.co.yumemi.android.code_check.ui.error_dialog.ErrorDialog
+import jp.co.yumemi.android.code_check.ui.favourite_repo.FavouriteRepositoryViewModel
 
 /**
  * Fragment responsible for displaying and managing the home screen UI.
@@ -28,7 +29,7 @@ import jp.co.yumemi.android.code_check.ui.error_dialog.ErrorDialog
 class HomeFragment : Fragment() {
 
     var binding: FragmentHomeBinding? = null
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
     private lateinit var githubRepositoryDetailAdapter: GithubRepositoryDetailAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +38,6 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflating the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         binding!!.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding?.vm = viewModel
         binding?.lifecycleOwner = viewLifecycleOwner
@@ -82,19 +82,28 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
     /**
      * Initialize RecyclerView adapter.
      */
     private fun initializeRecycleViewAdapter() {
+        val viewModel: FavouriteRepositoryViewModel by viewModels()
+        // Get the root view of the fragment
+// Get the root view of the fragment
+        val rootView = binding?.root ?: return
+
         // Initializing the RecyclerView adapter
+
         Log.d("HomeFragment", "Initializing RecyclerView adapter")
-        this.githubRepositoryDetailAdapter = GithubRepositoryDetailAdapter(object :
-            GithubRepositoryDetailAdapter.OnItemClickListener {
-            override fun itemClick(repo: GithubRepositoryData) {
-                gotoRepositoryFragment(repo)
-                logMessage("GitHub repository list updated")
-            }
-        })
+        this.githubRepositoryDetailAdapter = GithubRepositoryDetailAdapter(
+            object :
+                GithubRepositoryDetailAdapter.OnItemClickListener {
+                override fun itemClick(repo: GithubRepositoryData) {
+                    gotoRepositoryFragment(repo)
+                    logMessage("GitHub repository list updated")
+                }
+            }, viewModel,rootView
+        )
         // Set the RecyclerView adapter
         binding?.recyclerView?.adapter = githubRepositoryDetailAdapter
 
@@ -118,6 +127,7 @@ class HomeFragment : Fragment() {
 
         initializeSearch()
     }
+
     /**
      * Initialize search functionality and observe input changes.
      */
@@ -126,7 +136,8 @@ class HomeFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val searchText = s?.trim().toString() // Trim the input to remove leading and trailing spaces
+                val searchText =
+                    s?.trim().toString() // Trim the input to remove leading and trailing spaces
 
                 // Check if the trimmed search text is not empty and contains at least one non-space character
                 if (searchText.isNotBlank()) {
@@ -169,6 +180,7 @@ class HomeFragment : Fragment() {
         // Example validation criteria: search text should not contain only spaces
         return searchText.trim().isNotEmpty()
     }
+
     /**
      * Navigate to the RepositoryFragment with the selected repository item.
      *
@@ -199,10 +211,12 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            // Handle other dialog_fragment states as needed
         }
     }
 
+    /**
+     * Clears the binding reference onDestroyView to avoid memory leaks.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         // Clearing the binding reference

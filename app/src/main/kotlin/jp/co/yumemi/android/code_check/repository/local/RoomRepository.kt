@@ -1,5 +1,6 @@
 package jp.co.yumemi.android.code_check.repository.local
 
+import androidx.lifecycle.LiveData
 import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import javax.inject.Inject
@@ -11,6 +12,9 @@ import javax.inject.Inject
  */
 class RoomRepository @Inject constructor(
 private val dao: FavoriteRepositoryDao){
+
+
+    val readAllData: LiveData<List<FavoriteRepositoryEntity>> = dao.readAllData()
     /**
      * Inserts a new favorite repository into the database.
      *
@@ -34,5 +38,11 @@ private val dao: FavoriteRepositoryDao){
      */
     suspend fun deleteFavoriteRepository(repository: FavoriteRepositoryEntity) {
         dao.delete(repository)
+    }
+
+    // Suspend function to check if a repository is a favorite
+    suspend fun isFavorite(repositoryName: String): Boolean {
+        // Call the DAO method to check if the repository exists in favorites
+        return dao.isFavorite(repositoryName) != null
     }
 }
