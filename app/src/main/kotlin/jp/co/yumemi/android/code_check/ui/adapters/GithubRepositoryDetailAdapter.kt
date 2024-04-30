@@ -75,9 +75,10 @@ class GithubRepositoryDetailAdapter(
                     // Use viewModelScope to launch a coroutine
                     viewModel.viewModelScope.launch {
                         Log.d("FavouriteRepositoryViewModel", "Checking if repository is favorite")
-                        val isFavorite = viewModel.checkIfFavorite(favoriteRepository.id) // Ensure checkIfFavorite returns Boolean
+                        val isFavorite =
+                            favoriteRepository.name?.let { it1 -> viewModel.checkIfFavorite(it1) } // Ensure checkIfFavorite returns Boolean
                         Log.d("FavouriteRepositoryViewModel", "Is repository favorite: $isFavorite")
-                        if (isFavorite) {
+                        if (isFavorite == true) {
                             viewModel.removeFavoriteRepository(favoriteRepository)
                             Log.d("GithubRepositoryAdapter", "Repository removed from favorites: $favoriteRepository")
                         } else {

@@ -204,7 +204,6 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            // Handle other dialog_fragment states as needed
         }
     }
 

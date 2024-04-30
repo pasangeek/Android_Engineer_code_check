@@ -4,11 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import jp.co.yumemi.android.code_check.databinding.FavouriteLayoutItemBinding
 import jp.co.yumemi.android.code_check.ui.favourite_repo.FavouriteRepositoryViewModel
 
-class FavouriteRepositoryAdapter(private val favoriteRepositories: MutableList<FavoriteRepositoryEntity>,private val viewModel: FavouriteRepositoryViewModel) :
+class FavouriteRepositoryAdapter(
+    private val favoriteRepositories: MutableList<FavoriteRepositoryEntity>,
+    private val viewModel: FavouriteRepositoryViewModel
+) :
     RecyclerView.Adapter<FavouriteRepositoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: FavouriteLayoutItemBinding) :
@@ -16,6 +20,9 @@ class FavouriteRepositoryAdapter(private val favoriteRepositories: MutableList<F
 
         fun bind(repository: FavoriteRepositoryEntity) {
             with(binding) {
+
+                ivOwner.load(repository.owner?.avatarUrl)
+
                 // Bind repository data to UI elements
                 repositoryNameView.text = repository.name
                 heartImageView.setOnClickListener {

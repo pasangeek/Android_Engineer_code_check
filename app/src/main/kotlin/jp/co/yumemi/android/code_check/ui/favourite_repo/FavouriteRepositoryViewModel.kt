@@ -49,8 +49,8 @@ class FavouriteRepositoryViewModel  @Inject constructor(
      * @param repository The repository to check.
      * @return True if the repository is marked as favorite, false otherwise.
      */
-    suspend fun checkIfFavorite(repositoryId: Long): Boolean {
-        return repository.isFavorite(repositoryId)
+    suspend fun checkIfFavorite(repositoryName: String): Boolean {
+        return repository.isFavorite(repositoryName)
     }
 
     /**

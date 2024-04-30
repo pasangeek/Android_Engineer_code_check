@@ -41,8 +41,8 @@ private val dao: FavoriteRepositoryDao){
     }
 
     // Suspend function to check if a repository is a favorite
-    suspend fun isFavorite(repositoryId: Long): Boolean {
+    suspend fun isFavorite(repositoryName: String): Boolean {
         // Call the DAO method to check if the repository exists in favorites
-        return dao.isFavorite(repositoryId) != null
+        return dao.isFavorite(repositoryName) != null
     }
 }
