@@ -212,6 +212,8 @@ class HomeFragment : Fragment() {
                     // Handle null case
                     Log.e("ErrorDialog", "Received null error state")
                 }
+
+                else -> {}
             }
         }
     }

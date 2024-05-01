@@ -27,6 +27,7 @@
                 android:layout_marginEnd="@dimen/_8dp"
                 android:layout_weight="1"
                 android:text="@string/search_history"
+                android:textSize="@dimen/_12sp"
                 android:textAppearance="?android:textAppearanceMedium" />
             <TextView
                 android:id="@+id/searchTime"
@@ -35,6 +36,7 @@
                 android:layout_marginStart="@dimen/_8dp"
                 android:layout_marginEnd="@dimen/_8dp"
                 android:layout_weight="1"
+                android:textSize="@dimen/_14sp"
                 android:text="@string/search_time"
                 android:textAppearance="?android:textAppearanceMedium" />
 

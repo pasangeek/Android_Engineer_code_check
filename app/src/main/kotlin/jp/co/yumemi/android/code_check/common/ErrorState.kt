@@ -9,5 +9,5 @@ sealed class ErrorState {
      * @property message The error message describing the error.
      */
     data class Error(val message: String) : ErrorState()
-    data class Prompt(val message: String) : ErrorState()
+
 }

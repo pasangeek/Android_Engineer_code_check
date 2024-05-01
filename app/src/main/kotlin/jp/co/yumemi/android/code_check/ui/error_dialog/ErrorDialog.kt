@@ -27,11 +27,11 @@ class ErrorDialog(private val errorMessage: String, private val viewModel: HomeV
         return FragmentErrorDialogBinding.inflate(inflater, container, false).apply {
             binding = this
             errorMessage.text = this@ErrorDialog.errorMessage // Set the error message
-            backToHomePageButton() // Set up the "close" button click listener
+            backButton() // Set up the "close" button click listener
         }.root
     }
 
-    private fun backToHomePageButton() {
+    private fun backButton() {
         // Attach the click listener to the "close" button
         binding!!.closeButton.setOnClickListener {
             // Return the root view

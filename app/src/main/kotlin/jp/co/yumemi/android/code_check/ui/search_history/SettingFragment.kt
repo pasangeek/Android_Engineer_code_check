@@ -42,7 +42,14 @@ class SettingFragment : Fragment() {
             adapter.submitList(searchHistoryList)
             Log.d(TAG, "Search history data changed: $searchHistoryList")
         }
+        clearAllHistory()
     }
 
+fun clearAllHistory(){
 
+    binding?.btnHistoryClear?.setOnClickListener {
+
+        viewModel.deleteSearchHistory()
+    }
+}
 }
