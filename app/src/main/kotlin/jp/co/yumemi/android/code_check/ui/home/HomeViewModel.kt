@@ -1,5 +1,6 @@
 package jp.co.yumemi.android.code_check.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +13,7 @@ import jp.co.yumemi.android.code_check.data.database.entities.SearchHistory
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
 import jp.co.yumemi.android.code_check.repository.GithubRepository
-import jp.co.yumemi.android.code_check.repository.SearchHistoryRepository
+import jp.co.yumemi.android.code_check.sources.local.LocalDataSource
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val githubRepository: GithubRepository,
-    private val searchHistoryRepository: SearchHistoryRepository,
+    private val localDataSource: LocalDataSource,
     connectivityRepository: ConnectivityRepository
 ) : ViewModel() {
     // LiveData to observe network connectivity status
@@ -49,7 +50,7 @@ class HomeViewModel @Inject constructor(
     // LiveData to observe error state
     var errorState = MutableLiveData<ErrorState?>()
     val errorLiveData: MutableLiveData<ErrorState?> get() = errorState
-    val allSearchHistory: LiveData<List<SearchHistory>> = searchHistoryRepository.allSearchHistory
+
 
     init {
         // Initialize with the complete data
@@ -81,7 +82,12 @@ class HomeViewModel @Inject constructor(
         val timestamp = System.currentTimeMillis()
         val searchHistory = SearchHistory(query = query, timestamp = timestamp)
         viewModelScope.launch {
-            searchHistoryRepository.insert(searchHistory)
+            try {
+                localDataSource.insert(searchHistory)
+                Log.d("HomeViewModel", "Search history saved successfully: $query")
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Failed to save search history: $query, Error: ${e.message}")
+            }
         }
     }
     /**

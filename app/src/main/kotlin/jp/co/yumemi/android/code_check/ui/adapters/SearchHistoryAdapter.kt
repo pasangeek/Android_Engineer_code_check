@@ -26,9 +26,9 @@ class SearchHistoryViewHolder(private val binding: SearchHistoryItemBinding) : R
 
 
     fun bind(searchHistory: SearchHistory) {
-        binding.searchHistory.text = searchHistory.query
+        binding.searchQuery.text = searchHistory.query
         // Bind other properties if needed
-        binding.searchHistory.text= searchHistory.timestamp.toString()
+        binding.searchTime.text= searchHistory.timestamp.toString()
 
     }
 }

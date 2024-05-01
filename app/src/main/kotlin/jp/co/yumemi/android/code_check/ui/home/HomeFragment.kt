@@ -81,6 +81,8 @@ class HomeFragment : Fragment() {
                 is ResultState.Failure -> {
                     binding?.progressBar?.gone()
                 }
+
+                else -> {}
             }
         }
     }
@@ -213,6 +215,8 @@ class HomeFragment : Fragment() {
                     // Handle null case
                     Log.e("ErrorDialog", "Received null error state")
                 }
+
+                else -> {}
             }
 
         }

@@ -3,6 +3,7 @@ package jp.co.yumemi.android.code_check.sources.local
 import androidx.lifecycle.LiveData
 import jp.co.yumemi.android.code_check.data.database.ApplicationRepositoryDao
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
+import jp.co.yumemi.android.code_check.data.database.entities.SearchHistory
 import javax.inject.Inject
 /**
  * Repository class responsible for interacting with the Room database.
@@ -15,6 +16,12 @@ private val dao: ApplicationRepositoryDao){
 
 
     val readAllData: LiveData<List<FavoriteRepositoryEntity>> = dao.readAllData()
+    suspend fun insert(searchHistory: SearchHistory) {
+        dao.insertSearchHistory(searchHistory)
+    }
+    fun getAllSearchHistory(): LiveData<List<SearchHistory>> {
+        return dao.getAllSearchHistory()
+    }
     /**
      * Inserts a new favorite repository into the database.
      *
