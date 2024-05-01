@@ -3,11 +3,13 @@ package jp.co.yumemi.android.code_check.ui.home
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import jp.co.yumemi.android.code_check.common.ErrorState
 import jp.co.yumemi.android.code_check.common.ResultState
+import jp.co.yumemi.android.code_check.data.database.entities.SearchHistory
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.data.model.GithubServerResponse
 import jp.co.yumemi.android.code_check.data.model.Owner
 import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
 import jp.co.yumemi.android.code_check.repository.GithubRepository
+import jp.co.yumemi.android.code_check.repository.SearchHistoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -21,6 +23,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
@@ -43,6 +46,8 @@ class HomeViewModelTest{
     // Mock dependencies
     @Mock
     private lateinit var githubRepository: GithubRepository
+    @Mock
+    private lateinit var searchHistoryRepository: SearchHistoryRepository
     // Mock the dependencies
     @Mock
     private lateinit var connectivityRepository: ConnectivityRepository
@@ -60,7 +65,7 @@ class HomeViewModelTest{
         Mockito.`when`(connectivityRepository.isConnected)
             .thenReturn(null)
         // Initialize ViewModel
-        viewModel = HomeViewModel(githubRepository, connectivityRepository)
+        viewModel = HomeViewModel(githubRepository,searchHistoryRepository, connectivityRepository)
     }
     /**
      * Test that isOnline is false when networkConnectivityRepository returns null.
@@ -127,5 +132,21 @@ class HomeViewModelTest{
 
         // Then
         assertTrue(viewModel.errorLiveData.value is ErrorState.Error)
+    }
+    @Test
+    fun `test saveSearchQueryWithTimestamp`() {
+        // Define a sample query
+        val query = "Sample Query"
+        val timestamp = System.currentTimeMillis()
+        // Set up the behavior of the mock search history repository's insert method
+
+        // Call the method to be tested with the sample query
+        viewModel.saveSearchQueryWithTimestamp(query)
+
+        // Verify that the insert method of the mock search history repository was called with the expected SearchHistory object
+        // Verify that the insert method of the mock search history repository was called with the expected SearchHistory object
+        runBlocking {
+            Mockito.verify(searchHistoryRepository).insert(SearchHistory(query = query, timestamp = timestamp))
+        }
     }
 }

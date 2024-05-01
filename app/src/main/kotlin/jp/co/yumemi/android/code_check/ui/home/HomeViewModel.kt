@@ -1,5 +1,6 @@
 package jp.co.yumemi.android.code_check.ui.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -7,9 +8,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.co.yumemi.android.code_check.common.ErrorState
 import jp.co.yumemi.android.code_check.common.ResultState
+import jp.co.yumemi.android.code_check.data.database.entities.SearchHistory
 import jp.co.yumemi.android.code_check.data.model.GithubRepositoryData
 import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
 import jp.co.yumemi.android.code_check.repository.GithubRepository
+import jp.co.yumemi.android.code_check.repository.SearchHistoryRepository
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -28,6 +31,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val githubRepository: GithubRepository,
+    private val searchHistoryRepository: SearchHistoryRepository,
     connectivityRepository: ConnectivityRepository
 ) : ViewModel() {
     // LiveData to observe network connectivity status
@@ -45,6 +49,7 @@ class HomeViewModel @Inject constructor(
     // LiveData to observe error state
     var errorState = MutableLiveData<ErrorState?>()
     val errorLiveData: MutableLiveData<ErrorState?> get() = errorState
+    val allSearchHistory: LiveData<List<SearchHistory>> = searchHistoryRepository.allSearchHistory
 
     init {
         // Initialize with the complete data
@@ -72,7 +77,13 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
+    fun saveSearchQueryWithTimestamp(query: String) {
+        val timestamp = System.currentTimeMillis()
+        val searchHistory = SearchHistory(query = query, timestamp = timestamp)
+        viewModelScope.launch {
+            searchHistoryRepository.insert(searchHistory)
+        }
+    }
     /**
      * Clears the error state when the ViewModel is cleared.
      */
