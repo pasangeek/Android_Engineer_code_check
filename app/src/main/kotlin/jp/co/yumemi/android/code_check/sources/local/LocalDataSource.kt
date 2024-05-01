@@ -62,4 +62,7 @@ private val dao: ApplicationRepositoryDao){
     suspend fun getSearchHistoryCount(): Int {
         return dao.getSearchHistoryCount()
     }
+    suspend fun deleteAllSearchHistory() {
+        dao.deleteAllSearchHistory()
+    }
 }

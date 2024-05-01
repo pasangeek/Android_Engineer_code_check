@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.ui.setting
+package jp.co.yumemi.android.code_check.ui.search_history
 
 import android.content.ContentValues.TAG
 import android.os.Bundle

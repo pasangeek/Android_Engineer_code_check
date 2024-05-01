@@ -49,7 +49,7 @@ class RepositoryDetailViewModelTest {
     }
 
     /**
-     * Test setting repository details.
+     * Test search_history repository details.
      */
     @Test
     fun `test setRepositoryDetails`() {

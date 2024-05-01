@@ -57,4 +57,7 @@ interface ApplicationRepositoryDao {
     suspend fun deleteSearchHistory(ids: List<Long>)
     @Query("SELECT COUNT(*) FROM search_history")
     suspend fun getSearchHistoryCount(): Int
+    @Query("DELETE FROM search_history")
+    suspend fun deleteAllSearchHistory()
+
 }

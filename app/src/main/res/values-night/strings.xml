@@ -3,4 +3,5 @@
     <string name="title_setting">Account</string>
     <string name="title_repository">Repository</string>
     <string name="search_history">History</string>
+    <string name="btn_histrory_clear">Clear search History</string>
 </resources>

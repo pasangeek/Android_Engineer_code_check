@@ -1,6 +1,5 @@
 package jp.co.yumemi.android.code_check.ui.home
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,7 +21,6 @@ import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
 import jp.co.yumemi.android.code_check.ui.adapters.GithubRepositoryDetailAdapter
 import jp.co.yumemi.android.code_check.ui.error_dialog.ErrorDialog
 import jp.co.yumemi.android.code_check.ui.favourite_repo.FavouriteRepositoryViewModel
-import javax.inject.Inject
 
 /**
  * Fragment responsible for displaying and managing the home screen UI.
@@ -82,7 +80,7 @@ class HomeFragment : Fragment() {
                     binding?.progressBar?.gone()
                 }
 
-                else -> {}
+
             }
         }
     }
@@ -93,7 +91,7 @@ class HomeFragment : Fragment() {
     private fun initializeRecycleViewAdapter() {
         val viewModel: FavouriteRepositoryViewModel by viewModels()
         // Get the root view of the fragment
-// Get the root view of the fragment
+        // Get the root view of the fragment
         val rootView = binding?.root ?: return
 
         // Initializing the RecyclerView adapter
@@ -210,15 +208,11 @@ class HomeFragment : Fragment() {
                     val dialogFragment = ErrorDialog(errorState.message, viewModel)
                     dialogFragment.show(childFragmentManager, "ErrorDialog")
                 }
-
                 null -> {
                     // Handle null case
                     Log.e("ErrorDialog", "Received null error state")
                 }
-
-                else -> {}
             }
-
         }
     }
 
