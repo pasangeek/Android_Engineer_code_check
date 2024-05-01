@@ -91,11 +91,23 @@ class HomeViewModel @Inject constructor(
             try {
                 localDataSource.insert(searchHistory)
                 Log.d("HomeViewModel", "Search history saved successfully: $query")
+                // Retrieve the count of search history entries
+                val count = localDataSource.getSearchHistoryCount()
+                Log.d("HomeViewModel", "Search history count: $count")
+                // If there are more than 50 entries, delete the oldest entries
+                if (count > 50) {
+                    val oldestEntries = localDataSource.getNewestSearchHistory(count - 50)
+                    val idsToDelete = oldestEntries.map { it.id }
+                    localDataSource.deleteSearchHistory(idsToDelete)
+                    Log.d("HomeViewModel", "Oldest search history entries deleted")
+                }
             } catch (e: Exception) {
                 Log.e("HomeViewModel", "Failed to save search history: $query, Error: ${e.message}")
             }
         }
     }
+
+
     private fun formatTimestamp(timestamp: Long): String {
         return dateFormat.format(Date(timestamp))
     }
