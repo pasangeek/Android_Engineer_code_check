@@ -1,8 +1,8 @@
-package jp.co.yumemi.android.code_check.repository.remote
+package jp.co.yumemi.android.code_check.repository
 
 import android.util.Log
 import jp.co.yumemi.android.code_check.data.model.GithubServerResponse
-import jp.co.yumemi.android.code_check.sources.GithubRepositoryApiService
+import jp.co.yumemi.android.code_check.sources.remote.GithubRepositoryApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

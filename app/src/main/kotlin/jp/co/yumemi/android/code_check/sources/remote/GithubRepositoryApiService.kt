@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.sources
+package jp.co.yumemi.android.code_check.sources.remote
 
 import jp.co.yumemi.android.code_check.common.ConstantNetworkService
 import jp.co.yumemi.android.code_check.data.model.GithubServerResponse

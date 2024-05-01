@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class DatabaseModule {
     /**
-     * Provides a [SharedPreferences] instance named "UserSearchHistory" using the application context.
+     * Provides a [SharedPreferences] instance named "UserHistory" using the application context.
      * This instance allows storing and retrieving application-specific preferences persistently.
      *
      * @param context The [Context] obtained from the application.
@@ -27,7 +27,7 @@ class DatabaseModule {
      */
     @Provides
     fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences("UserSearchHistory", Context.MODE_PRIVATE)
+        return context.getSharedPreferences("UserHistory", Context.MODE_PRIVATE)
     }
 
     /**

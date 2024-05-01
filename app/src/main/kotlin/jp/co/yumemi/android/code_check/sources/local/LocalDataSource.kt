@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.code_check.repository.local
+package jp.co.yumemi.android.code_check.sources.local
 
 import androidx.lifecycle.LiveData
 import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
@@ -10,7 +10,7 @@ import javax.inject.Inject
  *
  * @property dao The Data Access Object (DAO) for favorite repositories.
  */
-class RoomRepository @Inject constructor(
+class LocalDataSource @Inject constructor(
 private val dao: FavoriteRepositoryDao){
 
 
@@ -45,4 +45,6 @@ private val dao: FavoriteRepositoryDao){
         // Call the DAO method to check if the repository exists in favorites
         return dao.isFavorite(repositoryName) != null
     }
+
+
 }
