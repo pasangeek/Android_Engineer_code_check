@@ -18,7 +18,14 @@ class ErrorDialog(private val errorMessage: String, private val viewModel: HomeV
     DialogFragment() {
     // ViewBinding for the dialog fragment
     private var binding: FragmentErrorDialogBinding? = null
-
+    /**
+     * Called to create the content view for this DialogFragment.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate views.
+     * @param container The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState The Bundle containing the state of the fragment.
+     * @return The root View of the inflated layout.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,18 +34,22 @@ class ErrorDialog(private val errorMessage: String, private val viewModel: HomeV
         return FragmentErrorDialogBinding.inflate(inflater, container, false).apply {
             binding = this
             errorMessage.text = this@ErrorDialog.errorMessage // Set the error message
-            backButton() // Set up the "close" button click listener
+            setupCloseButton() // Set up the "close" button click listener
         }.root
     }
-
-    private fun backButton() {
+    /**
+     * Sets up the click listener for the "close" button.
+     */
+    private fun setupCloseButton() {
         // Attach the click listener to the "close" button
         binding!!.closeButton.setOnClickListener {
             // Return the root view
             dismiss()
         }
     }
-
+    /**
+     * Called when the view hierarchy associated with the fragment is about to be destroyed.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         // Clearing the binding reference

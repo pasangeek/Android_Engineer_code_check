@@ -83,15 +83,22 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    /**
+     * Saves the search query with its timestamp to the local data source.
+     *
+     * @param query The search query to save.
+     */
     fun saveSearchQueryWithTimestamp(query: String) {
         val timestamp = System.currentTimeMillis()
         val formattedTimestamp = formatTimestamp(timestamp) // Format timestamp
         val searchHistory = SearchHistory(query = query, timestamp = formattedTimestamp)
         viewModelScope.launch {
             try {
+                // Insert search history into the local data source
                 localDataSource.insert(searchHistory)
                 Log.d("HomeViewModel", "Search history saved successfully: $query")
-                // Retrieve the count of search history entries
+                // Delete oldest search history entries if count exceeds 50
                 deleteOldestSearchHistory()
                 Log.d("HomeViewModel", "Oldest search history entries deleted")
             } catch (e: Exception) {
@@ -99,6 +106,10 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    /**
+     * Deletes the oldest search history entries if the count exceeds 50.
+     */
     private fun deleteOldestSearchHistory() {
         viewModelScope.launch {
             try {
@@ -113,21 +124,29 @@ class HomeViewModel @Inject constructor(
                     Log.d("HomeViewModel", "Oldest search history entries deleted")
                 }
             } catch (e: Exception) {
-                Log.e("HomeViewModel", "Failed to delete oldest search history entries, Error: ${e.message}")
+                Log.e(
+                    "HomeViewModel",
+                    "Failed to delete oldest search history entries, Error: ${e.message}"
+                )
             }
         }
     }
 
+    /**
+     * Formats the timestamp to a string.
+     *
+     * @param timestamp The timestamp to format.
+     * @return The formatted timestamp string.
+     */
     private fun formatTimestamp(timestamp: Long): String {
         return dateFormat.format(Date(timestamp))
     }
-        /**
+
+    /**
      * Clears the error state when the ViewModel is cleared.
      */
     public override fun onCleared() {
         super.onCleared()
         errorState.value = null
-
     }
-
 }

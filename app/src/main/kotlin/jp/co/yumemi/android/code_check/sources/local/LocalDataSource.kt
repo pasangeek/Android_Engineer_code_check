@@ -47,21 +47,45 @@ private val dao: ApplicationRepositoryDao){
         dao.delete(repository)
     }
 
-    // Suspend function to check if a repository is a favorite
+    /**
+     * Checks if a repository is a favorite.
+     *
+     * @param repositoryName The name of the repository to check.
+     * @return true if the repository is a favorite, false otherwise.
+     */
     suspend fun isFavorite(repositoryName: String): Boolean {
         // Call the DAO method to check if the repository exists in favorites
         return dao.isFavorite(repositoryName) != null
     }
+    /**
+     * Retrieves the newest search history entries from the database.
+     *
+     * @param offset The offset for pagination.
+     * @return A list of newest search history entries.
+     */
     suspend fun getNewestSearchHistory(offset: Int):List<SearchHistory>{
         return dao.getNewestSearchHistory(offset)
 
     }
+    /**
+     * Deletes search history entries with the specified IDs from the database.
+     *
+     * @param ids The IDs of the search history entries to delete.
+     */
     suspend fun deleteSearchHistory(ids: List<Long>) {
         dao.deleteSearchHistory(ids)
     }
+    /**
+     * Retrieves the count of search history entries from the database.
+     *
+     * @return The count of search history entries.
+     */
     suspend fun getSearchHistoryCount(): Int {
         return dao.getSearchHistoryCount()
     }
+    /**
+     * Deletes all search history entries from the database.
+     */
     suspend fun deleteAllSearchHistory() {
         dao.deleteAllSearchHistory()
     }

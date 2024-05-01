@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.databinding.FragmentSettingBinding
 import jp.co.yumemi.android.code_check.ui.adapters.SearchHistoryAdapter
-
+/**
+ * Fragment to display settings and manage search history.
+ */
 @AndroidEntryPoint
 class SettingFragment : Fragment() {
 
@@ -42,14 +44,24 @@ class SettingFragment : Fragment() {
             adapter.submitList(searchHistoryList)
             Log.d(TAG, "Search history data changed: $searchHistoryList")
         }
+        // Set up click listener for clear history button
         clearAllHistory()
     }
-
-fun clearAllHistory(){
-
-    binding?.btnHistoryClear?.setOnClickListener {
-
-        viewModel.deleteSearchHistory()
+    /**
+     * Set up click listener for the clear history button.
+     */
+    fun clearAllHistory() {
+        binding?.btnHistoryClear?.setOnClickListener {
+            viewModel.deleteSearchHistory()
+        }
     }
-}
+    /**
+     * Clears the binding reference onDestroyView to avoid memory leaks.
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Clearing the binding reference
+        binding = null
+
+    }
 }

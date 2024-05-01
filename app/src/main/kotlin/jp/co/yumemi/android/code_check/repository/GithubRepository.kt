@@ -56,7 +56,11 @@ open class GithubRepository @Inject constructor(private val githubRepositoryApiS
             null
         }
     }
-
+    /**
+     * Logs a message with a specified tag using the DEBUG log level.
+     *
+     * @param message The message to log.
+     */
     private fun logMessage(message: String) {
         Log.d("GithubRepository", message)
     }
