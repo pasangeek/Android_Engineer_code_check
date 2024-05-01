@@ -92,6 +92,17 @@ class HomeViewModel @Inject constructor(
                 localDataSource.insert(searchHistory)
                 Log.d("HomeViewModel", "Search history saved successfully: $query")
                 // Retrieve the count of search history entries
+                deleteOldestSearchHistory()
+                Log.d("HomeViewModel", "Oldest search history entries deleted")
+            } catch (e: Exception) {
+                Log.e("HomeViewModel", "Failed to save search history: $query, Error: ${e.message}")
+            }
+        }
+    }
+    private fun deleteOldestSearchHistory() {
+        viewModelScope.launch {
+            try {
+                // Retrieve the count of search history entries
                 val count = localDataSource.getSearchHistoryCount()
                 Log.d("HomeViewModel", "Search history count: $count")
                 // If there are more than 50 entries, delete the oldest entries
@@ -102,11 +113,10 @@ class HomeViewModel @Inject constructor(
                     Log.d("HomeViewModel", "Oldest search history entries deleted")
                 }
             } catch (e: Exception) {
-                Log.e("HomeViewModel", "Failed to save search history: $query, Error: ${e.message}")
+                Log.e("HomeViewModel", "Failed to delete oldest search history entries, Error: ${e.message}")
             }
         }
     }
-
 
     private fun formatTimestamp(timestamp: Long): String {
         return dateFormat.format(Date(timestamp))
