@@ -9,7 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import jp.co.yumemi.android.code_check.data.database.AppDatabase
-import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
+import jp.co.yumemi.android.code_check.data.database.ApplicationRepositoryDao
 import javax.inject.Singleton
 
 /**
@@ -55,7 +55,7 @@ class DatabaseModule {
      */
     @Provides
     @Singleton
-    fun provideFavoriteRepositoryDao(appDatabase: AppDatabase): FavoriteRepositoryDao {
+    fun provideFavoriteRepositoryDao(appDatabase: AppDatabase): ApplicationRepositoryDao {
         return appDatabase.favoriteRepositoryDao()
     }
 

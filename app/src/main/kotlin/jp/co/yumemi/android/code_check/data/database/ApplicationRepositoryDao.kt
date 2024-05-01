@@ -7,11 +7,19 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
+import jp.co.yumemi.android.code_check.data.database.entities.SearchHistory
+
 /**
  * Data Access Object (DAO) interface for interacting with the favorite repositories table.
  */
 @Dao
-interface FavoriteRepositoryDao {
+interface ApplicationRepositoryDao {
+
+    @Query("SELECT * FROM search_history ORDER BY timestamp DESC")
+    fun getAllSearchHistory(): LiveData<List<SearchHistory>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchHistory(searchHistory: SearchHistory)
     /**
      * Inserts a favorite repository into the database.
      *

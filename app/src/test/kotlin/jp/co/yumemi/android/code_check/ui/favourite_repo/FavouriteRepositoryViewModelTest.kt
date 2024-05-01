@@ -1,13 +1,12 @@
 package jp.co.yumemi.android.code_check.ui.favourite_repo
 
-import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
+import jp.co.yumemi.android.code_check.data.database.ApplicationRepositoryDao
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import jp.co.yumemi.android.code_check.data.model.Owner
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
 
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -17,9 +16,9 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class FavouriteRepositoryViewModelTest {
-    // Mocking the FavoriteRepositoryDao
+    // Mocking the ApplicationRepositoryDao
     @Mock
-    private lateinit var favoriteRepositoryDao: FavoriteRepositoryDao
+    private lateinit var applicationRepositoryDao: ApplicationRepositoryDao
     /**
      * Test case to verify the insertion of a single FavoriteRepositoryEntity into the database.
      */
@@ -38,10 +37,10 @@ class FavouriteRepositoryViewModelTest {
         )
 
         // Insert the sample FavoriteRepository into the database
-        favoriteRepositoryDao.insert(favoriteRepository)
+        applicationRepositoryDao.insert(favoriteRepository)
 
         // Verify that the insert operation was successful
-        Mockito.verify(favoriteRepositoryDao).insert(favoriteRepository)
+        Mockito.verify(applicationRepositoryDao).insert(favoriteRepository)
     }
     /**
      * Test case to verify the insertion of multiple hardcoded FavoriteRepositoryEntity objects into the database.
@@ -75,12 +74,12 @@ class FavouriteRepositoryViewModelTest {
 
         // Insert the hardcoded data into the database
         hardcodedData.forEach { repository ->
-            favoriteRepositoryDao.insert(repository)
+            applicationRepositoryDao.insert(repository)
         }
 
         // Verify that the insert operation was successful for each item
         hardcodedData.forEach { repository ->
-            Mockito.verify(favoriteRepositoryDao).insert(repository)
+            Mockito.verify(applicationRepositoryDao).insert(repository)
         }
     }
 }

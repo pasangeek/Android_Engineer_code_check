@@ -1,7 +1,7 @@
 package jp.co.yumemi.android.code_check.sources.local
 
 import androidx.lifecycle.LiveData
-import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
+import jp.co.yumemi.android.code_check.data.database.ApplicationRepositoryDao
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
 import javax.inject.Inject
 /**
@@ -11,7 +11,7 @@ import javax.inject.Inject
  * @property dao The Data Access Object (DAO) for favorite repositories.
  */
 class LocalDataSource @Inject constructor(
-private val dao: FavoriteRepositoryDao){
+private val dao: ApplicationRepositoryDao){
 
 
     val readAllData: LiveData<List<FavoriteRepositoryEntity>> = dao.readAllData()

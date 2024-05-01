@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.data.database.AppDatabase
-import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
+import jp.co.yumemi.android.code_check.data.database.ApplicationRepositoryDao
 import jp.co.yumemi.android.code_check.databinding.FragmentFavouriteRepositoryBinding
 import jp.co.yumemi.android.code_check.ui.adapters.FavouriteRepositoryAdapter
 import javax.inject.Inject
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class FavouriteRepositoryFragment : Fragment() {
 
     @Inject
-    lateinit var favoriteRepositoryDao: FavoriteRepositoryDao
+    lateinit var applicationRepositoryDao: ApplicationRepositoryDao
 
     @Inject
     lateinit var appDatabase: AppDatabase
