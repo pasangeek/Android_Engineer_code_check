@@ -1,6 +1,7 @@
-package jp.co.yumemi.android.code_check.di
+package jp.co.yumemi.android.code_check.di.local
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -10,12 +11,25 @@ import dagger.hilt.components.SingletonComponent
 import jp.co.yumemi.android.code_check.data.database.AppDatabase
 import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
 import javax.inject.Singleton
+
 /**
  * Dagger Hilt module responsible for providing instances related to the Room database.
  */
 @Module
 @InstallIn(SingletonComponent::class)
 class DatabaseModule {
+    /**
+     * Provides a [SharedPreferences] instance named "UserSearchHistory" using the application context.
+     * This instance allows storing and retrieving application-specific preferences persistently.
+     *
+     * @param context The [Context] obtained from the application.
+     * @return The [SharedPreferences] instance for the "YumemiCodingTestApplication" with private mode.
+     */
+    @Provides
+    fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences("UserSearchHistory", Context.MODE_PRIVATE)
+    }
+
     /**
      * Provides the singleton instance of the Room database [AppDatabase].
      *
@@ -32,6 +46,7 @@ class DatabaseModule {
         ).fallbackToDestructiveMigration()
             .build()
     }
+
     /**
      * Provides the Data Access Object (DAO) for accessing favorite repositories.
      *
