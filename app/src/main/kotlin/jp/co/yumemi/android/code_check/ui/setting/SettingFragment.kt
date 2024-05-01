@@ -6,27 +6,33 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
-
+import jp.co.yumemi.android.code_check.databinding.FragmentRepositoryDetailBinding
+import jp.co.yumemi.android.code_check.databinding.FragmentSettingBinding
+import jp.co.yumemi.android.code_check.ui.repository_detail.RepositoryDetailViewModel
+@AndroidEntryPoint
 class SettingFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = SettingFragment()
-    }
-
-    private lateinit var viewModel: SettingViewModel
+    // ViewModel for the fragment
+    private val viewModel: SettingViewModel by viewModels()
+    private var binding: FragmentSettingBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+        return FragmentSettingBinding.inflate(inflater, container, false).also {
+            binding = it
+        }.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SettingViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Clearing the binding reference
+        binding = null
+
     }
 
 }
