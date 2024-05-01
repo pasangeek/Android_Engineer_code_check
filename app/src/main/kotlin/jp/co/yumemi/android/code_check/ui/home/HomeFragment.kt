@@ -149,6 +149,8 @@ class HomeFragment : Fragment() {
                             if (isOnline) {
                                 viewModel.searchResults(searchText)
                                 logMessage("Search initiated with query: $searchText")
+                                // Save search query with timestamp
+                                viewModel.saveSearchQueryWithTimestamp(searchText)
                             } else {
                                 viewModel.errorState.value =
                                     ErrorState.Error("No internet connection available")
