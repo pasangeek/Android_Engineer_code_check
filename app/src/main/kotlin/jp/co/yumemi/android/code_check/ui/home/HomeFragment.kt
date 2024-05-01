@@ -79,6 +79,8 @@ class HomeFragment : Fragment() {
                 is ResultState.Failure -> {
                     binding?.progressBar?.gone()
                 }
+
+
             }
         }
     }
@@ -89,7 +91,7 @@ class HomeFragment : Fragment() {
     private fun initializeRecycleViewAdapter() {
         val viewModel: FavouriteRepositoryViewModel by viewModels()
         // Get the root view of the fragment
-// Get the root view of the fragment
+        // Get the root view of the fragment
         val rootView = binding?.root ?: return
 
         // Initializing the RecyclerView adapter
@@ -147,6 +149,8 @@ class HomeFragment : Fragment() {
                             if (isOnline) {
                                 viewModel.searchResults(searchText)
                                 logMessage("Search initiated with query: $searchText")
+                                // Save search query with timestamp
+                                viewModel.saveSearchQueryWithTimestamp(searchText)
                             } else {
                                 viewModel.errorState.value =
                                     ErrorState.Error("No internet connection available")
@@ -204,13 +208,13 @@ class HomeFragment : Fragment() {
                     val dialogFragment = ErrorDialog(errorState.message, viewModel)
                     dialogFragment.show(childFragmentManager, "ErrorDialog")
                 }
-
                 null -> {
                     // Handle null case
                     Log.e("ErrorDialog", "Received null error state")
                 }
-            }
 
+                else -> {}
+            }
         }
     }
 

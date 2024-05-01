@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_setting">Account</string>
+    <string name="title_setting">Setting</string>
     <string name="title_repository">Repository</string>
+    <string name="search_history">History</string>
 </resources>

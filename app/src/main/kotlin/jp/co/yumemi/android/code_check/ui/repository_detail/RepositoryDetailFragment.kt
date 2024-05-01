@@ -87,4 +87,11 @@ class RepositoryDetailFragment : Fragment() {
     private fun logMessage(message: String) {
         Log.d("RepositoryDetailFragment", message)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // Clearing the binding reference
+        binding = null
+
+    }
 }

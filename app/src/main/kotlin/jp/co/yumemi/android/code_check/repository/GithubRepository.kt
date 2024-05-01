@@ -1,8 +1,8 @@
-package jp.co.yumemi.android.code_check.repository.remote
+package jp.co.yumemi.android.code_check.repository
 
 import android.util.Log
 import jp.co.yumemi.android.code_check.data.model.GithubServerResponse
-import jp.co.yumemi.android.code_check.sources.GithubRepositoryApiService
+import jp.co.yumemi.android.code_check.sources.remote.GithubRepositoryApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -56,7 +56,11 @@ open class GithubRepository @Inject constructor(private val githubRepositoryApiS
             null
         }
     }
-
+    /**
+     * Logs a message with a specified tag using the DEBUG log level.
+     *
+     * @param message The message to log.
+     */
     private fun logMessage(message: String) {
         Log.d("GithubRepository", message)
     }

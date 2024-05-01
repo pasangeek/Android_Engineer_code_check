@@ -6,22 +6,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jp.co.yumemi.android.code_check.data.database.FavoriteRepositoryDao
+import jp.co.yumemi.android.code_check.data.database.ApplicationRepositoryDao
 import jp.co.yumemi.android.code_check.data.database.entities.FavoriteRepositoryEntity
-import jp.co.yumemi.android.code_check.repository.local.RoomRepository
+import jp.co.yumemi.android.code_check.sources.local.LocalDataSource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
  * ViewModel for managing favorite repositories.
  *
- * @property repository The RoomRepository instance for database operations.
- * @property favoriteRepositoryDao The FavoriteRepositoryDao instance for database operations.
+ * @property repository The LocalDataSource instance for database operations.
+ * @property applicationRepositoryDao The ApplicationRepositoryDao instance for database operations.
  */
 @HiltViewModel
 class FavouriteRepositoryViewModel  @Inject constructor(
-    private val repository: RoomRepository,
-    private val favoriteRepositoryDao: FavoriteRepositoryDao
+    private val repository: LocalDataSource,
+    private val applicationRepositoryDao: ApplicationRepositoryDao
 ): ViewModel() {
 
     // LiveData for holding favorite repositories

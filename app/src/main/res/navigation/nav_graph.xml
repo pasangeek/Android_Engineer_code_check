@@ -34,7 +34,7 @@
         tools:layout="@layout/fragment_favourite_repository" />
     <fragment
         android:id="@+id/settingFragment"
-        android:name="jp.co.yumemi.android.code_check.ui.setting.SettingFragment"
+        android:name="jp.co.yumemi.android.code_check.ui.search_history.SettingFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />
 </navigation>

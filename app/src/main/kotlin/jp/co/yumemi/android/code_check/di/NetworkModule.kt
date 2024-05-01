@@ -9,8 +9,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import jp.co.yumemi.android.code_check.common.ConstantNetworkService.BASE_URL
 import jp.co.yumemi.android.code_check.repository.ConnectivityRepository
-import jp.co.yumemi.android.code_check.repository.remote.GithubRepository
-import jp.co.yumemi.android.code_check.sources.GithubRepositoryApiService
+import jp.co.yumemi.android.code_check.repository.GithubRepository
+import jp.co.yumemi.android.code_check.sources.remote.GithubRepositoryApiService
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -115,7 +115,11 @@ object NetworkModule {
 
 
     }
-
+    /**
+     * Logs a message with a specified tag using the DEBUG log level.
+     *
+     * @param message The message to log.
+     */
     private fun logMessage(message: String) {
         Log.d("NetworkModule", message)
     }

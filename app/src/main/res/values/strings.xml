@@ -27,6 +27,10 @@
     <string name="repository_name">Repository Name</string>
     <string name="title_home">Home</string>
     <string name="title_favourite">Favourite</string>
-    <string name="title_setting">Account</string>
+    <string name="title_setting">Setting</string>
     <string name="title_repository">Repository</string>
+    <string name="search_history">History</string>
+    <string name="search_time">Search Time</string>
+    <string name="btn_history_clear">Clear search History</string>
+
 </resources>
