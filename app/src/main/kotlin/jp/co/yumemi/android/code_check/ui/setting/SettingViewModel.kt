@@ -11,7 +11,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(private val localDataSource: LocalDataSource) : ViewModel() {
 
-    private val _allSearchHistory = MutableLiveData<List<SearchHistory>>()
     val allSearchHistory: LiveData<List<SearchHistory>> get() = localDataSource.getAllSearchHistory()
 
 

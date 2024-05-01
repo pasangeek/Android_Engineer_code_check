@@ -8,5 +8,5 @@ import androidx.room.PrimaryKey
 data class SearchHistory(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "query") val query: String,
-    @ColumnInfo(name = "timestamp") val timestamp: Long
+    @ColumnInfo(name = "timestamp") val timestamp: String
 )

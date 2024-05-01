@@ -52,6 +52,12 @@ private val dao: ApplicationRepositoryDao){
         // Call the DAO method to check if the repository exists in favorites
         return dao.isFavorite(repositoryName) != null
     }
+    suspend fun getNewestSearchHistory(offset: Int):List<SearchHistory>{
+        return dao.getNewestSearchHistory(offset)
 
+    }
+    suspend fun deleteSearchHistory(ids: List<Long>) {
+        dao.deleteSearchHistory(ids)
+    }
 
 }

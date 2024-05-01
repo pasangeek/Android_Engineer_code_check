@@ -11,7 +11,7 @@ import jp.co.yumemi.android.code_check.data.database.entities.SearchHistory
  * This class defines the database configuration and provides access to DAOs.
  */
 @Database(entities = [FavoriteRepositoryEntity::class, SearchHistory::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(OwnerTypeConverter::class)

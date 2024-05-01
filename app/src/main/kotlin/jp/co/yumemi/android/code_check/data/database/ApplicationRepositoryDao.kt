@@ -48,4 +48,11 @@ interface ApplicationRepositoryDao {
 
     @Query("SELECT * FROM favorite_repositories WHERE name = :repositoryName")
     suspend fun isFavorite(repositoryName: String): FavoriteRepositoryEntity?
+
+
+    @Query("SELECT * FROM search_history ORDER BY id DESC LIMIT 50 OFFSET :offset")
+    suspend fun getNewestSearchHistory(offset: Int): List<SearchHistory>
+
+    @Query("DELETE FROM search_history WHERE id IN (:ids)")
+    suspend fun deleteSearchHistory(ids: List<Long>)
 }

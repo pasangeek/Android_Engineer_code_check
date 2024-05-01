@@ -1,7 +1,6 @@
 package jp.co.yumemi.android.code_check.ui.home
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -17,6 +16,9 @@ import jp.co.yumemi.android.code_check.sources.local.LocalDataSource
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 /**
@@ -35,6 +37,9 @@ class HomeViewModel @Inject constructor(
     private val localDataSource: LocalDataSource,
     connectivityRepository: ConnectivityRepository
 ) : ViewModel() {
+    // Define a date format
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
     // LiveData to observe network connectivity status
     val isOnline = connectivityRepository.isConnected
         ?.map { it } // Use the Elvis operator to provide a default value
@@ -80,7 +85,8 @@ class HomeViewModel @Inject constructor(
     }
     fun saveSearchQueryWithTimestamp(query: String) {
         val timestamp = System.currentTimeMillis()
-        val searchHistory = SearchHistory(query = query, timestamp = timestamp)
+        val formattedTimestamp = formatTimestamp(timestamp) // Format timestamp
+        val searchHistory = SearchHistory(query = query, timestamp = formattedTimestamp)
         viewModelScope.launch {
             try {
                 localDataSource.insert(searchHistory)
@@ -90,7 +96,10 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-    /**
+    private fun formatTimestamp(timestamp: Long): String {
+        return dateFormat.format(Date(timestamp))
+    }
+        /**
      * Clears the error state when the ViewModel is cleared.
      */
     public override fun onCleared() {
