@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.common.ErrorState
 import jp.co.yumemi.android.code_check.common.ResultState
 import jp.co.yumemi.android.code_check.common.gone
@@ -32,9 +33,7 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var githubRepositoryDetailAdapter: GithubRepositoryDetailAdapter
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflating the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -43,7 +42,6 @@ class HomeFragment : Fragment() {
         binding?.lifecycleOwner = viewLifecycleOwner
         return binding?.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -97,13 +95,12 @@ class HomeFragment : Fragment() {
 
         Log.d("HomeFragment", "Initializing RecyclerView adapter")
         this.githubRepositoryDetailAdapter = GithubRepositoryDetailAdapter(
-            object :
-                GithubRepositoryDetailAdapter.OnItemClickListener {
+            object : GithubRepositoryDetailAdapter.OnItemClickListener {
                 override fun itemClick(repo: GithubRepositoryData) {
                     gotoRepositoryFragment(repo)
                     logMessage("GitHub repository list updated")
                 }
-            }, viewModel,rootView
+            }, viewModel, rootView
         )
         // Set the RecyclerView adapter
         binding?.recyclerView?.adapter = githubRepositoryDetailAdapter
@@ -133,6 +130,7 @@ class HomeFragment : Fragment() {
      * Initialize search functionality and observe input changes.
      */
     private fun initializeSearch() {
+
         binding?.searchInputText?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -152,19 +150,19 @@ class HomeFragment : Fragment() {
                                 viewModel.saveSearchQueryWithTimestamp(searchText)
                             } else {
                                 viewModel.errorState.value =
-                                    ErrorState.Error("No internet connection available")
+                                    ErrorState.Error(getString(R.string.error_no_internet))
                             }
                         }
                     } else {
                         binding?.apply {
-                            searchInputText.error = "Please enter a valid search query"
+                            searchInputText.error = getString(R.string.error_invalid_search_query)
                             githubRepositoryDetailAdapter.submitList(emptyList())
                         }
                         logMessage("Invalid search query: $searchText")
                     }
                 } else {
                     binding?.apply {
-                        searchInputText.error = "Please enter a search query"
+                        searchInputText.error = getString(R.string.error_invalid_search_query)
                         githubRepositoryDetailAdapter.submitList(emptyList())
                     }
                     logMessage("Search query cleared")
@@ -207,6 +205,7 @@ class HomeFragment : Fragment() {
                     val dialogFragment = ErrorDialog(errorState.message, viewModel)
                     dialogFragment.show(childFragmentManager, "ErrorDialog")
                 }
+
                 null -> {
                     // Handle null case
                     Log.e("ErrorDialog", "Received null error state")
