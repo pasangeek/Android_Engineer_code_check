@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Layout for displaying repository details -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Data binding variable for RepositoryDetailViewModel -->
+    <data>
+
+        <variable
+            name="detailsVM"
+            type="jp.co.yumemi.android.code_check.ui.repository_detail.RepositoryDetailViewModel" />
+    </data>
+    <!-- ConstraintLayout to hold the repository detail views -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/repoDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- FloatingActionButton for navigating back to previous screen -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/backButton"
+            android:layout_width="@dimen/backButton_width"
+            android:layout_height="@dimen/backButton_height"
+            android:layout_marginEnd="@dimen/backButton_marginEnd"
+            android:layout_marginBottom="82dp"
+            android:clickable="true"
+            android:contentDescription="@string/navigate_back"
+            android:focusable="true"
+            android:paddingBottom="@dimen/_24dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="20dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+        <!-- Main linear layout to hold other views -->
+        <LinearLayout
+            android:id="@+id/linearLayout_Main"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30dp"
+                android:layout_marginTop="@dimen/_30dp"
+                android:layout_marginEnd="@dimen/_30dp"
+                android:background="@drawable/border"
+                android:gravity="center|top"
+                android:orientation="vertical">
+                <!-- CardView to display the owner's profile image -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/imageCardView"
+                    android:layout_width="@dimen/imageCardView_width"
+                    android:layout_height="@dimen/imageCardView_height"
+                    android:layout_marginTop="@dimen/imageCardView_marginTop"
+                    android:elevation="@dimen/cardview_default_elevation"
+                    app:cardCornerRadius="@dimen/cardview_default_radius">
+                    <!-- ImageView for the owner's profile image -->
+                    <ImageView
+                        android:id="@+id/ownerIconView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/ic_user"
+                        android:contentDescription="@string/owner_s_profile_image"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
+                <!-- TextView for repository name -->
+                <TextView
+                    android:id="@+id/nameView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/name_view_margin_top"
+                    android:text="@{detailsVM.gitHubRepositoryDetails.name}"
+                    android:textColor="@color/text_color_light" />
+                <!-- TextView for repository language -->
+                <TextView
+                    android:id="@+id/languageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/language_view_margin"
+                    android:text="@{String.format(@string/written_language,detailsVM.gitHubRepositoryDetails.language)}"
+                    android:textColor="@color/text_color_light" />
+            </LinearLayout>
+            <!-- Linear layout for displaying stars, watchers, and forks count -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_30dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginEnd="30dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+                <!-- Box for stars count -->
+                <LinearLayout
+                    android:id="@+id/stars_count_box"
+                    android:layout_width="@dimen/_110dp"
+                    android:layout_height="@dimen/_100dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10dp"
+                    android:textAllCaps="false">
+                    <!-- TextView for stars count -->
+                    <TextView
+                        android:id="@+id/starsView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_12dp"
+                        android:text="@{detailsVM.gitHubRepositoryDetails.stargazersCount}" />
+                    <!-- Text for stars count -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/stars"
+                        android:textSize="@dimen/_14sp" />
+                </LinearLayout>
+                <!-- Box for watchers count -->
+                <LinearLayout
+                    android:id="@+id/watchers_count_box"
+                    android:layout_width="@dimen/_110dp"
+                    android:layout_height="@dimen/_100dp"
+                    android:layout_marginStart="@dimen/_6dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10dp"
+                    android:textAllCaps="false">
+                    <!-- TextView for watchers count -->
+                    <TextView
+                        android:id="@+id/watchersView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{detailsVM.gitHubRepositoryDetails.watchersCount}" />
+                    <!-- Text for watchers count -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/watchers"
+                        android:textSize="@dimen/_13sp" />
+                </LinearLayout>
+                <!-- Box for forks count -->
+                <LinearLayout
+                    android:id="@+id/forks_count_box"
+                    android:layout_width="@dimen/_110dp"
+                    android:layout_height="@dimen/_100dp"
+                    android:layout_marginStart="@dimen/_6dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10dp"
+                    android:textAllCaps="false">
+                    <!-- TextView for forks count -->
+                    <TextView
+                        android:id="@+id/forksView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_12dp"
+                        android:text="@{detailsVM.gitHubRepositoryDetails.forksCount}" />
+                    <!-- Text for forks count -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/forks"
+                        android:textSize="@dimen/_14sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <!-- Linear layout for displaying open issues count -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_30dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:layout_marginRight="@dimen/_30dp"
+                android:orientation="vertical">
+                <!-- TextView for open issues count -->
+                <TextView
+                    android:id="@+id/openIssuesView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:text="@{detailsVM.gitHubRepositoryDetails.openIssuesCount}" />
+                <!-- Text for open issues count -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/open_issues"
+                    android:textSize="@dimen/_14sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

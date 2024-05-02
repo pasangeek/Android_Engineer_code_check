@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Layout for the error dialog -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_16dp"
+    tools:context=".ui.error_dialog.ErrorDialog">
+    <!-- Error message TextView -->
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/_16dp"
+        android:gravity="center"
+        android:text="@string/an_error_occurred"
+        android:textSize="@dimen/_18sp" />
+    <!-- Close Button -->
+    <Button
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/git_blue"
+        android:text="@string/close"
+        android:textSize="@dimen/_16sp" />
+
+</LinearLayout>

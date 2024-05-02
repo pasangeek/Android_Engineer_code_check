@@ -1,5 +1,42 @@
 <resources>
     <string name="app_name">Android Engineer CodeCheck</string>
-    <string name="searchInputText_hint">GitHub のリポジトリを検索できるよー</string>
+    <string name="searchInputText_hint" translatable="true">GitHub Repository Search</string>
     <string name="written_language">Written in %s</string>
+    <string name="written_in_kotlin">Written in Kotlin</string>
+    <string name="jetbrains_kotlin">JetBrains/kotlin</string>
+    <string name="stars">STARS</string>
+    <string name="watchers">Watchers</string>
+    <string name="description_">Description</string>
+    <string name="forks">Forks</string>
+    <string name="open_issues">Open Issues</string>
+    <string name="stars_count" translatable="true">%1$d stars</string>
+    <string name="watchers_count" translatable="true">%1$d watchers</string>
+    <string name="description" translatable="true">%1$d description</string>
+    <string name="forks_count" translatable="true">%1$d forks</string>
+    <string name="open_issues_count">%1$d open issues</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="content_description_image_user" />
+    <string name="yumemi">Yumemi</string>
+    <string name="owner_s_profile_image">Owner\'s Profile Image</string>
+    <string name="back_button">Back Button</string>
+    <string name="navigate_back">Navigate Back</string>
+    <string name="owner_image">Owner_image</string>
+    <string name="close">Close</string>
+    <string name="an_error_occurred">An error occurred.</string>
+    <string name="repository_name">Repository Name</string>
+    <string name="title_home">Home</string>
+    <string name="title_favourite">Favourite</string>
+    <string name="title_setting">Setting</string>
+    <string name="title_repository">Repository</string>
+    <string name="search_history">History</string>
+    <string name="search_time">Search Time</string>
+    <string name="btn_history_clear">Clear search History</string>
+    <string name="yuememi_Inc">YUMEMI Inc</string>
+    <string name="splash_screen_main_picture">Splash screen main picture</string>
+    <string name="android_engineer_code_check">Android Engineer Code Check</string>
+    <string name="error_invalid_search_query">Please enter a valid search query</string>
+    <string name="error_no_internet">No internet connection available</string>
+    <string name="delete_icon_description">delete view icon</string>
+    <string name="heart_icon_description">heart image view</string>
+
 </resources>
