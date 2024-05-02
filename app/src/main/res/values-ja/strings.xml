@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name" translatable="false">Android Engineer CodeCheck</string>
+    <string name="searchInputText_hint" translatable="true">GitHubリポジトリ検索</string>
+    <string name="written_language">%sで書かれています</string>
+    <string name="written_in_kotlin">Kotlinで書かれています</string>
+    <string name="jetbrains_kotlin">JetBrains/kotlin</string>
+    <string name="stars">スター</string>
+    <string name="watchers">ウォッチャー</string>
+    <string name="description_">説明</string>
+    <string name="forks">フォーク</string>
+    <string name="open_issues">オープンイシュー</string>
+    <string name="stars_count" translatable="true">%1$d スター</string>
+    <string name="watchers_count" translatable="true">%1$d ウォッチャー</string>
+    <string name="description" translatable="true">%1$d 説明</string>
+    <string name="forks_count" translatable="true">%1$d フォーク</string>
+    <string name="open_issues_count">%1$d オープンイシュー</string>
+    <string name="hello_blank_fragment">こんにちは、空のフラグメント</string>
+    <string name="content_description_image_user" />
+    <string name="yumemi">ユメミ</string>
+    <string name="owner_s_profile_image">所有者のプロフィール画像</string>
+    <string name="back_button">戻るボタン</string>
+    <string name="navigate_back">戻る</string>
+    <string name="owner_image">所有者画像</string>
+    <string name="close">閉じる</string>
+    <string name="an_error_occurred">エラーが発生しました。</string>
+    <string name="repository_name">リポジトリ名</string>
+    <string name="title_home">ホーム</string>
+    <string name="title_favourite">お気に入り</string>
+    <string name="title_setting">設定</string>
+    <string name="title_repository">リポジトリ</string>
+    <string name="search_history">履歴</string>
+    <string name="search_time">検索時間</string>
+    <string name="btn_history_clear">検索履歴をクリア</string>
+    <string name="yuememi_Inc">株式会社ゆめみ</string>
+    <string name="splash_screen_main_picture">スプラッシュ画面メイン画像</string>
+    <string name="android_engineer_code_check">Android エンジニアコードチェック</string>
+</resources>
