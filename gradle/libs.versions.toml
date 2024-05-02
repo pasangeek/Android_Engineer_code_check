@@ -1,9 +1,7 @@
 [versions]
-accompanist = "0.32.0"
+
 android-gradle = "8.2.2"
-androidDesugarJdkLibs = "2.0.4"
 # AGP and tools should be updated together
-androidTools = "31.3.2"
 androidx-coreKtx = "1.13.0"
 androidx-lifecycleLivedataKtx = "2.7.0"
 androidx-lifecycleRuntimeKtx = "2.7.0"

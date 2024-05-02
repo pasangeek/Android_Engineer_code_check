@@ -47,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_12dp"
                 android:layout_marginEnd="@dimen/_16dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="@dimen/_12dp"
+                android:contentDescription="@string/delete_icon_description"
                 app:srcCompat="@drawable/arrow_left"
                 app:tint="@color/red" />
         </LinearLayout>
