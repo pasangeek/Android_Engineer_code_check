@@ -4,6 +4,7 @@
 package jp.co.yumemi.android.code_check.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -22,8 +23,9 @@ import jp.co.yumemi.android.code_check.databinding.ActivityTopBinding
  */
 @AndroidEntryPoint
 class TopActivity : AppCompatActivity() {
-
+    // Inflate the layout using ViewBinding
     private lateinit var binding: ActivityTopBinding
+
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,17 @@ class TopActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         // Setup the BottomNavigationView with the Navigation Controller
         navView.setupWithNavController(navController)
-
+        // Listen for destination changes
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.splashFragment) {
+                // Hide bottom navigation and disable up button when on splash screen
+                binding.navView.visibility = View.GONE
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            } else {
+                // Show bottom navigation for other destinations
+                binding.navView.visibility = View.VISIBLE
+            }
+        }
     }
 
     /**
