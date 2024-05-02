@@ -34,4 +34,6 @@
     <string name="yuememi_Inc">株式会社ゆめみ</string>
     <string name="splash_screen_main_picture">スプラッシュ画面メイン画像</string>
     <string name="android_engineer_code_check">Android エンジニアコードチェック</string>
+    <string name="error_invalid_search_query">有効な検索クエリを入力してください</string>
+    <string name="error_no_internet">インターネット接続がありません</string>
 </resources>

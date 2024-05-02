@@ -34,5 +34,7 @@
     <string name="yuememi_Inc">YUMEMI Inc</string>
     <string name="splash_screen_main_picture">Splash screen main picture</string>
     <string name="android_engineer_code_check">Android Engineer Code Check</string>
+    <string name="error_invalid_search_query">Please enter a valid search query</string>
+    <string name="error_no_internet">No internet connection available</string>
 
 </resources>
