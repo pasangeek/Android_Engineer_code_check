@@ -189,7 +189,7 @@ class HomeFragment : Fragment() {
      */
     fun gotoRepositoryFragment(item: GithubRepositoryData) {
         val action =
-            HomeFragmentDirections.actionHomeFragment2ToRepositoryDetailFragment2(repositoryArgument = item)
+            HomeFragmentDirections.actionHomeFragmentToRepositoryDetailFragment(repositoryArgument = item)
         findNavController().navigate(action)
         logMessage("Navigating to RepositoryDetailFragment with item: ${item.name}")
     }

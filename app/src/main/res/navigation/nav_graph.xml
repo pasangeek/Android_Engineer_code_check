@@ -9,7 +9,7 @@
         android:name="jp.co.yumemi.android.code_check.ui.home.HomeFragment"
         android:label="@string/title_home">
         <action
-            android:id="@+id/action_homeFragment2_to_repositoryDetailFragment2"
+            android:id="@+id/action_homeFragment_to_repositoryDetailFragment"
             app:destination="@id/repositoryDetailFragment" />
     </fragment>
     <fragment
