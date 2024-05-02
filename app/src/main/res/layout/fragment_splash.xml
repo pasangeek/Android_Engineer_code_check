@@ -9,8 +9,8 @@
 
     <!-- Image View for displaying the main picture -->
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/_150dp"
+        android:layout_height="@dimen/_150dp"
         android:contentDescription="@string/splash_screen_main_picture"
         android:src="@drawable/git_logo" />
 
@@ -20,14 +20,14 @@
         android:layout_height="wrap_content"
         android:letterSpacing="0.1"
         android:text="@string/yuememi_Inc"
-        android:textSize="10sp"
+        android:textSize="@dimen/_10sp"
         android:textStyle="bold" />
 
     <!-- Horizontal Divider -->
     <View
-        android:layout_width="80dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="2dp"
+        android:layout_width="@dimen/_80dp"
+        android:layout_height="@dimen/_1dp"
+        android:layout_marginTop="@dimen/_2dp"
         android:background="@color/git_blue"
         android:orientation="vertical" />
 
@@ -35,9 +35,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_10dp"
         android:letterSpacing=".2"
         android:text="@string/android_engineer_code_check"
-        android:textSize="9sp" />
+        android:textSize="@dimen/_9sp" />
 
 </LinearLayout>
