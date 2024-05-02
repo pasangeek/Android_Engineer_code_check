@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import jp.co.yumemi.android.code_check.ARG_PARAM1
-import jp.co.yumemi.android.code_check.ARG_PARAM2
 import jp.co.yumemi.android.code_check.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
