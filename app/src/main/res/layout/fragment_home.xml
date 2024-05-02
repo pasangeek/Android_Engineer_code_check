@@ -1,19 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- Layout for the top activity -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <!-- Data binding variable for HomeViewModel -->
     <data>
+
         <variable
             name="vm"
             type="jp.co.yumemi.android.code_check.ui.home.HomeViewModel" />
     </data>
+    <!-- ConstraintLayout to hold the UI components -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:context=".activities.TopActivity">
-
+        <!-- CardView for search input -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="@dimen/_0dp"
@@ -24,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
+            <!-- TextInputLayout for search input -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/searchInputLayout"
                 android:layout_width="match_parent"
@@ -39,7 +41,7 @@
                 app:startIconDrawable="@android:drawable/ic_menu_search"
                 app:startIconTint="@android:color/darker_gray" />
 
-
+            <!-- TextInputEditText for search input -->
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/searchInputText"
                 android:layout_width="match_parent"
@@ -57,7 +59,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-
+        <!-- RecyclerView to display search results -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="@dimen/_0dp"
@@ -69,7 +71,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
-
+        <!-- LottieAnimationView for displaying animation -->
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_View"
             android:layout_width="@dimen/_200dp"
@@ -85,7 +87,7 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/octocat" />
-
+        <!-- ProgressBar for indicating loading state -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

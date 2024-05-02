@@ -91,7 +91,6 @@ class HomeFragment : Fragment() {
     private fun initializeRecycleViewAdapter() {
         val viewModel: FavouriteRepositoryViewModel by viewModels()
         // Get the root view of the fragment
-        // Get the root view of the fragment
         val rootView = binding?.root ?: return
 
         // Initializing the RecyclerView adapter
