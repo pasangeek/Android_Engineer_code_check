@@ -36,5 +36,6 @@
     <string name="android_engineer_code_check">Android Engineer Code Check</string>
     <string name="error_invalid_search_query">Please enter a valid search query</string>
     <string name="error_no_internet">No internet connection available</string>
-
+    <string name="delete_icon_description">delete view icon</string>
+    <string name="heart_icon_description">heart image view</string>
 </resources>
