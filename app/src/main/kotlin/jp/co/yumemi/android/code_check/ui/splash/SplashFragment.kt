@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,10 +17,10 @@ import kotlinx.coroutines.launch
  * Use the [SplashFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class SplashFragment : Fragment() {
     // Duration of splash screen display
     private val SPLASH_DISPLAY_LENGTH = 5000L
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
