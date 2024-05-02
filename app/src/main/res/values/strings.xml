@@ -32,5 +32,8 @@
     <string name="search_history">History</string>
     <string name="search_time">Search Time</string>
     <string name="btn_history_clear">Clear search History</string>
+    <string name="yuememi_co_operation_all_rights_reserved">Yuememi Co-Operation All Rights Reserved</string>
+    <string name="splash_screen_main_picture">Splash screen main picture</string>
+    <string name="android_engineer_code_check">Android Engineer Code Check</string>
 
 </resources>
